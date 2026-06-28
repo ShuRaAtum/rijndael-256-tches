@@ -1,12 +1,13 @@
 # Rijndael-256 ARM Optimization Integration Status
 
-> **Note on third-party code and licensing.** `folded_integration/` contains only
-> our own Rijndael-256 integration files (the `rijndael256_*` sources, wrappers,
-> and the build-file edits) intended to be dropped on top of each scheme's
-> upstream NIST reference implementation. Obtain the upstream SDitH, Mirath, RYDE,
-> MQOM, and FAEST reference codebases from their respective sources; those carry
-> their own licenses. Our integration files are released under this repository's
-> MIT license (see `../LICENSE`).
+> **Note on third-party code and licensing.** `folded_integration/tree/` holds an
+> added/modified integration snapshot for each scheme: our Rijndael-256 sources and
+> wrappers (`rijndael256_*`) plus the build-file edits needed to enable them, to be
+> applied on top of the scheme's upstream NIST reference implementation. The build
+> files (Makefiles/CMakeLists) are derived from those upstream projects and remain
+> under their original licenses; obtain the full SDitH, Mirath, RYDE, MQOM, and
+> FAEST reference codebases from their respective sources. Our own additions are
+> released under this repository's MIT license (see `../LICENSE`).
 
 ## All 5 NIST PQC Signature Algorithms Integrated
 

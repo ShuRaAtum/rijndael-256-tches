@@ -17,7 +17,7 @@ Additionally, end-to-end PQC signature benchmarks (SDitH, Mirath, RYDE, MQOM) ar
 
 ```
 artifact/
-├── README.md               # This file
+├── README.md               # Project overview and performance summary
 ├── common/                  # Shared headers (S-box, T-tables, test vectors)
 │   ├── rijndael256.h
 │   ├── rijndael256_tables.h
@@ -58,16 +58,19 @@ artifact/
 ├── benchmark_pqc/           # PQC signature integration benchmarks (Section 6)
 │   ├── bench_pqc_sign.c     # Benchmark driver
 │   ├── INTEGRATION_STATUS.md
-│   └── results/             # Raw benchmark logs
+│   ├── folded_integration/  # Per-scheme integration snapshot (apply to upstream)
+│   └── results/             # PQC benchmark logs + benchmark_summary.md
 │
-└── results/                 # Pre-collected benchmark results
-    ├── cortexm4_stm32f407/  # Cortex-M4 data
-    ├── aarch64_apple_m2/    # AArch64 data
-    ├── aarch64_rpi5_a76/    # Cortex-A76 data
-    ├── aarch64_rpi4/        # Cortex-A72 data
-    ├── x86_i7_1165g7/       # x86 VAES-512 data
-    ├── cuda_rtx4080/        # CUDA data + NCU profiling
-    └── pqc_apple_m2/        # PQC integration data
+└── docs/                    # Documentation and pre-collected measurement data
+    ├── ARTIFACT_README.md   # This file
+    ├── benchmark_results.md # Full result tables
+    ├── neon_performance_analysis.md
+    └── results/             # Flat, date-stamped data files (one set per platform)
+        ├── cortexm4_2026-03-17.csv, cortexm4_rom_stack_2026-04-14.txt
+        ├── apple_m2_2026-06-18.{csv,run.txt}  (+ _dit_, _throughput_, _env.txt)
+        ├── rpi5_a76_2026-06-19.*, rpi4_2026-03-18.*   # Cortex-A76 / A72
+        ├── x86_i7-1165g7_2026-06-18.csv (+ _env.txt)
+        └── cuda_rtx4080/    # CUDA benchmark logs (.txt) + per-mode CSVs + ncu/ (Nsight Compute)
 ```
 
 ---
@@ -205,7 +208,7 @@ Block size is always 256 bits (32 bytes). Nr = 14 for all key sizes.
 | Fixslice ASM | 5,481 | 8,924 | 696 | Yes |
 | Reference C | 12,374 | 3,216 | 240 | No |
 
-ROM (encrypt path only: encrypt + key schedule + tables) and Stack (call-chain peak across encrypt and key schedule) were measured per the paper's methodology. Raw per-function breakdown is in `results/cortexm4_stm32f407/rom_stack.txt`, measured with `-ffunction-sections -fdata-sections -fstack-usage` flags (arm-none-eabi-gcc 13.2.1). The `rom_stack.txt` paper-table summary uses the same encrypt-path convention as this table; decrypt-path data is retained there only as a reference breakdown.
+ROM (encrypt path only: encrypt + key schedule + tables) and Stack (call-chain peak across encrypt and key schedule) were measured per the paper's methodology. Raw per-function breakdown is in `docs/results/cortexm4_rom_stack_2026-04-14.txt`, measured with `-ffunction-sections -fdata-sections -fstack-usage` flags (arm-none-eabi-gcc 13.2.1). That file's paper-table summary uses the same encrypt-path convention as this table; decrypt-path data is retained there only as a reference breakdown.
 
 ### Hardware AES reuse — corresponds to the paper's AArch64/x86 comparison table
 
@@ -249,27 +252,28 @@ Speedups are ARM Crypto Extension over constant-time Reference implementation.
 
 ## Results Directory
 
-Each subdirectory in `results/` contains an `env.txt` file describing the exact hardware, OS, toolchain, and measurement methodology.
+Pre-collected data lives in `docs/results/` as flat, date-stamped files (CUDA data is under `docs/results/cuda_rtx4080/`; PQC data is under `benchmark_pqc/results/`). Each platform's `*_env.txt` records the exact hardware, OS, toolchain, and measurement methodology.
 
-| Directory | Platform | Paper section |
+| Files (`docs/results/`) | Platform | Paper section |
 |-----------|----------|------------|
-| `cortexm4_stm32f407/` | STM32F407VG, Cortex-M4, 168 MHz | Cortex-M4 |
-| `aarch64_apple_m2/` | Apple M2, macOS | AArch64 |
-| `aarch64_rpi5_a76/` | Raspberry Pi 5, Cortex-A76, Linux | AArch64 |
-| `aarch64_rpi4/` | Raspberry Pi 4, Cortex-A72, Linux | AArch64 |
-| `x86_i7_1165g7/` | Intel i7-1165G7, VAES-512 | AArch64/x86 comparison |
-| `cuda_rtx4080/` | RTX 4080, 76 SMs, CUDA 12.0 | CUDA |
-| `pqc_apple_m2/` | Apple M2, PQC signature schemes | Evaluation |
+| `cortexm4_2026-03-17.*`, `cortexm4_rom_stack_2026-04-14.txt` | STM32F407VG, Cortex-M4, 168 MHz | Cortex-M4 |
+| `apple_m2_2026-06-18.*` (+ `_dit_`, `_throughput_`) | Apple M2, macOS | AArch64 |
+| `rpi5_a76_2026-06-19.*` | Raspberry Pi 5, Cortex-A76, Linux | AArch64 |
+| `rpi4_2026-03-18.*` | Raspberry Pi 4, Cortex-A72, Linux | AArch64 |
+| `x86_i7-1165g7_2026-06-18.*` | Intel i7-1165G7, VAES-512 | AArch64/x86 comparison |
+| `cuda_rtx4080/` (subdir) | RTX 4080, 76 SMs, CUDA 12.0 | CUDA |
+| `benchmark_pqc/results/` | Apple M2, PQC signature schemes | Evaluation |
 
-The CUDA results directory also includes:
-- Nsight Compute profiling data (`ncu_*.txt`, `ncu_summary.csv`) showing occupancy, IPC, and bank conflict metrics reported in the paper
-- `ecb_naive.csv` / `ctr_naive.csv` — CF layout **without** staggered store optimization (pre-optimization baseline)
-- `ecb_staggered.csv` / `ctr_staggered.csv` — CF layout **with** staggered store optimization
+`docs/results/cuda_rtx4080/` contains:
+- `benchmark_*.txt` — per-mode run logs with throughput and occupancy summaries
+- `ecb_naive.csv` / `ctr_naive.csv` — CF layout **without** the staggered store (pre-optimization baseline)
+- `ecb_staggered.csv` / `ctr_staggered.csv` — CF layout **with** the staggered store
+- `ncu/` — Nsight Compute exports (`ncu_results*.txt`, `ncu_focused_metrics.txt`, `ncu_summary.csv`) with the occupancy, IPC, and bank-conflict metrics in the paper's CUDA profiling table
 
 The naive vs. staggered comparison corresponds to the paper's CUDA tables
 (Compact vs. CF naive vs. CF staggered).
 
-**Note on PQC benchmark data:** The raw logs in `pqc_apple_m2/final_benchmark_*.txt` are from a separate measurement run and may show minor variations (within typical run-to-run noise) from the summary values. The canonical results used in the paper are in `pqc_apple_m2/benchmark_summary.md`.
+**Note on PQC benchmark data:** The raw logs in `benchmark_pqc/results/final_benchmark_*.txt` are from a separate measurement run and may show minor variations (within typical run-to-run noise) from the summary values. The canonical results used in the paper are in `benchmark_pqc/results/benchmark_summary.md`.
 
 ---
 
@@ -282,7 +286,7 @@ The PQC benchmarks (`benchmark_pqc/`) require external NIST PQC signature candid
 - **RYDE**: [NIST PQC Round 1 submission](https://csrc.nist.gov/Projects/pqc-dig-sig)
 - **MQOM**: [NIST PQC Round 1 submission](https://csrc.nist.gov/Projects/pqc-dig-sig)
 
-See `benchmark_pqc/INTEGRATION_STATUS.md` for integration details and patching instructions. The pre-collected results in `results/pqc_apple_m2/` can be used for verification without building the PQC libraries.
+See `benchmark_pqc/INTEGRATION_STATUS.md` for integration details and patching instructions. The pre-collected results in `benchmark_pqc/results/` can be used for verification without building the PQC libraries.
 
 ---
 

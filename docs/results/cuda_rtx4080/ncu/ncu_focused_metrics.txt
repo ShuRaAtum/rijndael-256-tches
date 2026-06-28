@@ -1,0 +1,252 @@
+==PROF== Connected to process 91270 (<home>/2026/paper/Rijndael-256/cuda/build/profile_ecb)
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 0: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 1: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 2: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 3: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_decrypt_kerne..." - 4: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_decrypt_kerne..." - 5: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 6: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 7: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 8: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_encrypt_kerne..." - 9: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_decrypt_kerne..." - 10: 0%....50%....100% - 3 passes
+==PROF== Profiling "rijndael256_ecb_decrypt_kerne..." - 11: 0%....50%....100% - 3 passes
+==PROF== Disconnected from process 91270
+Rijndael-256 ECB Profile: 1048576 blocks (32 MiB)
+
+--- Pass 1 (tpb=128, 1048576 blocks, 32 MiB) ---
+--- Pass 1 done ---
+
+--- Pass 2 (tpb=256, 1048576 blocks, 32 MiB) ---
+--- Pass 2 done ---
+
+All profile launches complete.
+[91270] profile_ecb@127.0.0.1
+  rijndael256_ecb_encrypt_kernel_v2(const unsigned char *, unsigned char *, unsigned long, int) (8192, 1, 1)x(128, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                         38,223
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                   31,931
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                             9.80
+    sm__cycles_elapsed.avg                                         cycle 1,114,206.13
+    sm__inst_executed.sum                                           inst   66,027,520
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        86.82
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   111,023.65
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 6,494,193.09
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   388,060.62
+    smsp__warps_issue_stalled_wait.avg                              warp   128,051.02
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v3(const unsigned char *, unsigned char *, unsigned long, int) (8192, 1, 1)x(128, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                        382,567
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                  370,432
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                            53.89
+    sm__cycles_elapsed.avg                                         cycle 1,080,357.58
+    sm__inst_executed.sum                                           inst   94,699,520
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        15.58
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   233,545.67
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp   606,522.22
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   163,032.24
+    smsp__warps_issue_stalled_wait.avg                              warp   116,094.70
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v2(const unsigned char *, unsigned char *, unsigned long, int) (8192, 1, 1)x(128, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                         37,303
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                   31,570
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                             9.80
+    sm__cycles_elapsed.avg                                         cycle 1,109,656.79
+    sm__inst_executed.sum                                           inst   66,027,520
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        86.89
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   108,818.83
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 6,552,311.39
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   385,712.13
+    smsp__warps_issue_stalled_wait.avg                              warp   128,045.27
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v3(const unsigned char *, unsigned char *, unsigned long, int) (8192, 1, 1)x(128, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                        389,098
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                  381,080
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                            53.89
+    sm__cycles_elapsed.avg                                         cycle 1,077,039.50
+    sm__inst_executed.sum                                           inst   94,699,520
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        15.58
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   233,453.28
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp   615,190.42
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   161,314.82
+    smsp__warps_issue_stalled_wait.avg                              warp   116,088.16
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_decrypt_kernel_v2(const unsigned char *, unsigned char *, unsigned long, int) (8192, 1, 1)x(128, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                         36,347
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                   28,780
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                             9.80
+    sm__cycles_elapsed.avg                                         cycle 1,020,141.50
+    sm__inst_executed.sum                                           inst   67,338,240
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        87.00
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   118,661.98
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 5,702,188.83
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   292,538.81
+    smsp__warps_issue_stalled_wait.avg                              warp   129,164.75
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_decrypt_kernel_v3(const unsigned char *, unsigned char *, unsigned long, int) (8192, 1, 1)x(128, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                        290,083
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                  267,236
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                            53.89
+    sm__cycles_elapsed.avg                                         cycle 1,123,244.21
+    sm__inst_executed.sum                                           inst   94,666,752
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        15.62
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   240,885.82
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp   621,033.97
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   166,631.14
+    smsp__warps_issue_stalled_wait.avg                              warp   112,148.21
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v2(const unsigned char *, unsigned char *, unsigned long, int) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                              0
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                        0
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                             8.98
+    sm__cycles_elapsed.avg                                         cycle 1,397,784.84
+    sm__inst_executed.sum                                           inst   65,142,784
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        93.09
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp    93,303.65
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 5,925,885.22
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   348,782.65
+    smsp__warps_issue_stalled_wait.avg                              warp   119,865.55
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v3(const unsigned char *, unsigned char *, unsigned long, int) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                        110,374
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                  110,817
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                            26.95
+    sm__cycles_elapsed.avg                                         cycle 1,378,091.66
+    sm__inst_executed.sum                                           inst   92,012,544
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        30.36
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   273,641.67
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 1,754,271.53
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   120,880.07
+    smsp__warps_issue_stalled_wait.avg                              warp   104,647.27
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v2(const unsigned char *, unsigned char *, unsigned long, int) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                              0
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                        0
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                             8.98
+    sm__cycles_elapsed.avg                                         cycle 1,396,239.87
+    sm__inst_executed.sum                                           inst   65,142,784
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        93.10
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp    93,466.68
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 5,936,155.03
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   348,511.85
+    smsp__warps_issue_stalled_wait.avg                              warp   119,864.50
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_encrypt_kernel_v3(const unsigned char *, unsigned char *, unsigned long, int) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                        129,952
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                  109,540
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                            26.95
+    sm__cycles_elapsed.avg                                         cycle 1,380,318.03
+    sm__inst_executed.sum                                           inst   92,012,544
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        30.37
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   274,854.94
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 1,749,281.93
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   120,631.18
+    smsp__warps_issue_stalled_wait.avg                              warp   104,647.75
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_decrypt_kernel_v2(const unsigned char *, unsigned char *, unsigned long, int) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                              0
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                        0
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                             8.98
+    sm__cycles_elapsed.avg                                         cycle 1,190,618.55
+    sm__inst_executed.sum                                           inst   66,453,504
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        92.31
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp    80,432.21
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 5,127,309.66
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   258,122.89
+    smsp__warps_issue_stalled_wait.avg                              warp   121,374.24
+    -------------------------------------------------------- ----------- ------------
+
+  rijndael256_ecb_decrypt_kernel_v3(const unsigned char *, unsigned char *, unsigned long, int) (4096, 1, 1)x(256, 1, 1), Context 1, Stream 7, Device 0, CC 8.9
+    Section: Command line profiler metrics
+    -------------------------------------------------------- ----------- ------------
+    Metric Name                                              Metric Unit Metric Value
+    -------------------------------------------------------- ----------- ------------
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared.sum                        130,459
+    l1tex__data_bank_conflicts_pipe_lsu_mem_shared_op_ld.sum                  128,409
+    l1tex__t_sectors_pipe_lsu_mem_shared_op_ld.sum                            (!) n/a
+    launch__occupancy                                                         (!) n/a
+    launch__waves_per_multiprocessor                                            26.95
+    sm__cycles_elapsed.avg                                         cycle 1,423,691.71
+    sm__inst_executed.sum                                           inst   91,979,776
+    sm__warps_active.avg.pct_of_peak_sustained_active                  %        30.13
+    smsp__warps_issue_stalled_long_scoreboard.avg                   warp   293,843.07
+    smsp__warps_issue_stalled_mio_throttle.avg                      warp 1,660,907.40
+    smsp__warps_issue_stalled_short_scoreboard.avg                  warp   101,382.67
+    smsp__warps_issue_stalled_wait.avg                              warp   100,784.52
+    -------------------------------------------------------- ----------- ------------
+

@@ -1,0 +1,117 @@
+Rijndael-256 ECB Nsight Compute Profiling Results
+==================================================
+Device: NVIDIA AD103 (CC 8.9, RTX 4080)
+Workload: 1M blocks (32 MiB), 256-bit key
+Date: 2026-04-09
+
+Note: Warmup launches included (indices 0-1, 6-7). Profiled data below
+uses the second (post-warmup) launch of each kernel for consistency.
+
+============================================================
+1. Achieved Occupancy (warps_active % of peak)
+============================================================
+                    tpb=128     tpb=256
+  V2 Encrypt        86.89%      93.10%
+  V3 Encrypt        15.58%      30.37%
+  V2 Decrypt        87.00%      92.31%
+  V3 Decrypt        15.62%      30.13%
+
+Analysis:
+  - V2 (Compact, 8KiB smem) achieves high occupancy at both configs.
+    tpb=256 pushes it to ~93%, close to theoretical max.
+  - V3 (CF, 36KiB smem) is severely occupancy-limited: only 15.6% at tpb=128,
+    30% at tpb=256. The large shared memory footprint limits resident warps.
+  - Doubling tpb from 128->256 nearly doubles V3 occupancy (15.6%->30%).
+
+============================================================
+2. Bank Conflicts (shared memory) — CF staggered store applied
+============================================================
+                    tpb=128             tpb=256
+                    total    ld_only    total    ld_only
+  V2 Encrypt        37,303   31,570         0        0
+  V3 Encrypt       389,098  381,080   129,952  109,540
+  V2 Decrypt        36,347   28,780         0        0
+  V3 Decrypt       290,083  267,236   130,459  128,409
+
+Analysis:
+  - V2@tpb=256: ZERO bank conflicts — perfect shared memory access pattern.
+  - V2@tpb=128: negligible conflicts (~37K), essentially conflict-free.
+  - V3@tpb=128 (staggered): ~389K total conflicts — dramatically reduced from
+    65.5M in the naive version (99.4% reduction).
+  - V3@tpb=256 (staggered): ~130K conflicts — further reduced.
+  - With staggered store, V3's bank conflicts are no longer a bottleneck.
+
+============================================================
+3. SM Cycles & Throughput
+============================================================
+                    tpb=128         tpb=256
+                    cycles          cycles
+  V2 Encrypt        1,109,657       1,396,240
+  V3 Encrypt        1,077,040       1,380,318
+  V2 Decrypt        1,020,142       1,190,619
+  V3 Decrypt        1,123,244       1,423,692
+
+Effective throughput (32 MiB / cycles, relative):
+                    tpb=128     tpb=256     ratio(V2/V3)
+  Encrypt           28.8        23.0        V3 is 1.03x faster at tpb=128
+  Decrypt           31.4        26.9        V2 is 1.10x faster
+
+Analysis:
+  - V3 Encrypt now matches or slightly beats V2 Encrypt at tpb=128
+    (1,077K vs 1,110K cycles) — staggered store makes CF competitive.
+  - V2 Decrypt still leads V3 Decrypt (1,020K vs 1,123K).
+  - Both V2 and V3 are fastest at tpb=128 on the RTX 4080.
+
+============================================================
+4. Instructions Executed
+============================================================
+                    tpb=128         tpb=256
+  V2 Encrypt        66,027,520      65,142,784
+  V3 Encrypt        94,699,520      92,012,544
+  V2 Decrypt        67,338,240      66,453,504
+  V3 Decrypt        94,666,752      91,979,776
+
+Analysis:
+  - V3 executes ~43% more instructions than V2 (CF table setup overhead).
+  - Instruction counts are stable across tpb configs (expected).
+
+============================================================
+5. SM Active Warps & Waves per Multiprocessor
+============================================================
+                    tpb=128                 tpb=256
+                    waves/SM    occ%        waves/SM    occ%
+  V2 Encrypt         9.80       86.89        8.98       93.10
+  V3 Encrypt        53.89       15.58       26.95       30.37
+  V2 Decrypt         9.80       87.00        8.98       92.31
+  V3 Decrypt        53.89       15.62       26.95       30.13
+
+Analysis:
+  - V3 requires ~5.5x more waves than V2 to process the same data,
+    because fewer warps are resident simultaneously (low occupancy).
+  - V2@tpb=128: 9.80 waves — nearly single-wave execution with 76 SMs.
+  - V3@tpb=128: 53.89 waves — significant serialization across waves.
+
+============================================================
+6. Summary for Paper (Table-ready, staggered store applied)
+============================================================
+Kernel       tpb   Occupancy  BankConf(total)  Cycles      Inst       IPC
+----------   ---   ---------  ---------------  ----------  ---------  -----
+V2 Enc       128    86.9%          37,303       1,109,657  66,027,520  59.5
+V2 Enc       256    93.1%               0       1,396,240  65,142,784  46.7
+V3 Enc       128    15.6%         389,098       1,077,040  94,699,520  87.9
+V3 Enc       256    30.4%         129,952       1,380,318  92,012,544  66.7
+V2 Dec       128    87.0%          36,347       1,020,142  67,338,240  66.0
+V2 Dec       256    92.3%               0       1,190,619  66,453,504  55.8
+V3 Dec       128    15.6%         290,083       1,123,244  94,666,752  84.3
+V3 Dec       256    30.1%         130,459       1,423,692  91,979,776  64.6
+
+IPC = inst_executed.sum / cycles_elapsed.avg (aggregate across all SMs)
+
+Key Findings (RTX 4080, tpb=128):
+  1. With staggered store, V3 (CF) Encrypt records 3% fewer SM cycles
+     than V2 (Compact) despite 5.5x lower occupancy.
+  2. V3's IPC rises to 87.9 vs V2's 59.5.
+  3. V3's low occupancy (15.6%) does not prevent it from matching or
+     exceeding V2 throughput once bank conflicts are resolved.
+  4. Eliminating bank conflicts via staggered store turns a 1.55x
+     slowdown into a comparable or slightly faster result.

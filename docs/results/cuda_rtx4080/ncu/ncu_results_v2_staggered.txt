@@ -1,0 +1,126 @@
+Rijndael-256 ECB Nsight Compute Profiling Results — Staggered Store Patch
+==========================================================================
+Device: NVIDIA AD103 (CC 8.9, RTX 4080)
+Workload: 1M blocks (32 MiB), 256-bit key
+Date: 2026-04-09
+Patch: Te0_s/Td0_s init loop uses staggered column index
+       Te0_s[i][(b + warpThreadIndex) & 31] = te0_val;
+
+Note: Post-warmup launches used (indices 2-5 for tpb=128, 8-11 for tpb=256).
+
+============================================================
+1. Bank Conflicts — Before vs After (Staggered Store)
+============================================================
+                    tpb=128                             tpb=256
+                    BEFORE          AFTER    reduction  BEFORE          AFTER    reduction
+V3 Enc total    65,533,970        389,098     -99.4%   32,617,592      129,952    -99.60%
+V3 Enc ld         (naive)         381,080              (naive)         109,540
+V3 Dec total    65,406,667        290,083     -99.6%   32,645,822      130,459    -99.60%
+V3 Dec ld         (naive)         267,236              (naive)         128,409
+
+V2 Enc total        38,308         37,303      -2.6%            0            0       0
+V2 Dec total        37,841         36,347      -3.9%            0            0       0
+
+Key finding: Store-side bank conflicts are effectively eliminated.
+  - tpb=128 Enc: total conflicts dropped from 65.5M to 389K (99.4% reduction)
+  - Remaining conflicts are dominated by load-side, inherent to the T-table
+    lookup pattern.
+  - V2 is unchanged (already near-zero conflicts).
+
+============================================================
+2. SM Cycles — Before vs After
+============================================================
+                    tpb=128                         tpb=256
+                    BEFORE      AFTER    speedup    BEFORE      AFTER    speedup
+V3 Encrypt      1,716,710  1,077,040     1.59x     1,567,886  1,380,318   1.14x
+V3 Decrypt      1,697,173  1,123,244     1.51x     1,485,100  1,423,692   1.04x
+V2 Encrypt      1,110,567  1,109,657     1.00x     1,396,240  1,396,240   1.00x
+V2 Decrypt      1,004,823  1,020,142     0.98x     1,184,478  1,190,619   1.00x
+
+Key finding: V3 kernel is 1.51-1.59x faster at tpb=128 after the patch.
+
+============================================================
+3. V2 vs V3 Gap — Before vs After
+============================================================
+                    BEFORE (V3/V2)     AFTER (V3/V2)
+Enc tpb=128          1.55x slower       0.97x (V3 FASTER)
+Enc tpb=256          1.12x slower       0.99x (nearly equal)
+Dec tpb=128          1.69x slower       1.10x slower
+Dec tpb=256          1.25x slower       1.20x slower
+
+Key finding: With staggered store on RTX 4080, V3 Encrypt now BEATS V2 Encrypt
+at tpb=128 — the CF layout is no longer slower than Compact once bank conflicts
+are resolved.
+
+============================================================
+4. Instructions Executed
+============================================================
+                    tpb=128                     tpb=256
+                    BEFORE      AFTER           BEFORE      AFTER
+V3 Encrypt      90,112,000  94,699,520 (+5.1%)  88,473,600  92,012,544 (+4.0%)
+V3 Decrypt      92,241,920  94,666,752 (+2.6%)  90,603,520  91,979,776 (+1.5%)
+V2 Encrypt      66,027,520  66,027,520 (same)   65,142,784  65,142,784 (same)
+V2 Decrypt      67,338,240  67,338,240 (same)   66,453,504  66,453,504 (same)
+
+Analysis: V3 adds ~2-5% more instructions from the (b + lane) & 31 computation,
+but the cycle savings from eliminating bank conflicts far outweigh this cost.
+
+============================================================
+5. Occupancy & Waves (unchanged by this patch)
+============================================================
+                    tpb=128                 tpb=256
+                    occ%    waves/SM        occ%    waves/SM
+V3 Encrypt          15.58   53.89           30.37    26.95
+V3 Decrypt          15.62   53.89           30.13    26.95
+V2 Encrypt          86.89    9.80           93.10     8.98
+V2 Decrypt          87.00    9.80           92.31     8.98
+
+Note: Occupancy is determined by shared memory size, which is unchanged.
+
+============================================================
+6. Warp Stall Breakdown (post-warmup, tpb=128)
+============================================================
+                    V2 Enc (after)      V3 Enc (before/naive)  V3 Enc (after/stag)
+mio_throttle       6,552,311            (not collected)         606,522
+short_scoreboard     385,712            (not collected)         163,032
+long_scoreboard      108,819            (not collected)         233,546
+wait                 128,045            (not collected)         116,095
+
+Analysis:
+  - V3 mio_throttle is much lower than V2 (607K vs 6.6M), indicating the
+    staggered CF layout has minimal shared memory pipeline stalls.
+  - V2's mio_throttle (~6.6M) is now the dominant stall, reflecting the
+    bank conflicts inherent in the Compact layout's 4-table lookup pattern.
+
+============================================================
+7. Updated Summary Table for Paper
+============================================================
+Kernel       tpb   Occupancy  BankConf(total)  Cycles      Inst        IPC
+----------   ---   ---------  ---------------  ----------  ----------  -----
+V2 Enc       128    86.9%          37,303       1,109,657  66,027,520  59.5
+V2 Enc       256    93.1%               0       1,396,240  65,142,784  46.7
+V3 Enc       128    15.6%         389,098       1,077,040  94,699,520  87.9
+V3 Enc       256    30.4%         129,952       1,380,318  92,012,544  66.7
+V2 Dec       128    87.0%          36,347       1,020,142  67,338,240  66.0
+V2 Dec       256    92.3%               0       1,190,619  66,453,504  55.8
+V3 Dec       128    15.6%         290,083       1,123,244  94,666,752  84.3
+V3 Dec       256    30.1%         130,459       1,423,692  91,979,776  64.6
+
+IPC = inst_executed.sum / cycles_elapsed.avg (aggregate across all SMs)
+
+============================================================
+8. Key Findings
+============================================================
+1. Staggered store eliminates 99.4-99.6% of V3 bank conflicts.
+   Total conflicts dropped from ~65.5M to ~290K-389K.
+
+2. V3 kernel speed improved 1.51-1.59x at tpb=128 (the primary config).
+   Cycles: 1.72M → 1.08M (encrypt), 1.70M → 1.12M (decrypt).
+
+3. V3 Encrypt records fewer SM cycles than V2 Encrypt at tpb=128
+   (0.97x cycles).
+
+4. V3's IPC rises from 52.5 to 87.9 at tpb=128, vs V2's 59.5.
+
+5. V3's low occupancy (15.6%) does not prevent it from matching or
+   exceeding V2 throughput at tpb=128 once bank conflicts are resolved.
