@@ -223,6 +223,11 @@ AArch64 values are throughput (higher is better); x86 values are cycles/byte
 throughput. The PQC integrations use the EOR ARM Crypto variant because those
 schemes rekey frequently.
 
+The AArch64 table uses the human-readable `*_run.txt` invocations. The companion
+AArch64 CSV files are independent `--csv` invocations for machine-readable
+archival data, so absolute MB/s values can differ slightly while the reported
+AES-256/R256 slowdown is unchanged.
+
 ### CUDA (RTX 4080, 76 SMs) — corresponds to the paper's CUDA throughput/profiling tables
 
 | Mode | Compact V2 (GiB/s) | CF Staggered V3 (GiB/s) |

@@ -64,8 +64,10 @@ Notes / caveats:
   - A76 optimum is N=2 (x4/x8 do not improve over x2: ~989 vs 1014 MB/s) — a shallower interleave
     sweet-spot than M2's N=4, consistent with the narrower A76 NEON issue width.
   - Data validated against the discarded fanless run by 5 gates: max temp <80 C; AES-256 < AES-128
-    (single); x2 >= single; <0.2% variance between the run.txt and committed --csv invocations;
-    folded-vs-AES-256 at best-N ~2.4x.
+    (single); x2 >= single; folded-vs-AES-256 at best-N ~2.4x.
+  - The paper table and the headline numbers above use the human-readable run.txt invocation.
+    The companion CSV is an independent --csv invocation for machine-readable archival data, so
+    absolute MB/s values can differ slightly; the best-N AES-256/R256 slowdown remains 2.40x.
 
 Raw data files (this run):
   rpi5_a76_2026-06-19.csv             AES->R256 baseline + folded + interleave (best-of-10; --csv invocation)

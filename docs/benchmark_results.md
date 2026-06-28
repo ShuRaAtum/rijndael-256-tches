@@ -193,6 +193,10 @@ toggled at EL0 (`msr DIT, #0/#1`, read-back confirmed), best-of-50, single + x4:
 
 Measured: 2026-06-19 (Cortex-A76, ARMv8.2-A; gcc 13.3.0, -O3 -march=armv8.2-a+crypto; best-of-10; **active fan**)
 Raw data: `docs/results/rpi5_a76_2026-06-19.csv` (+ `_run.txt`, `_env.txt`, `rpi5_a76_throughput_2026-06-19.csv`)
+The paper-facing table below uses the human-readable `_run.txt` invocation. The
+CSV is an independent `--csv` invocation for machine-readable archival data, so
+absolute MB/s values can differ slightly; the best-N AES-256/R256 slowdown is
+2.40x in both.
 
 First **non-Apple** Crypto-Extension core for the folded path — confirms the AArch64 findings
 generalise off Apple Silicon. Same binary/config as the M2 run (round-matched AES-256 (14R) / AES-128

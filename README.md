@@ -36,6 +36,10 @@ Optimized implementations of Rijndael-256 (256-bit block) across multiple platfo
 > Raw data: `docs/results/apple_m2_2026-06-18_run.txt`,
 > `docs/results/rpi5_a76_2026-06-19_run.txt`,
 > `docs/results/x86_i7-1165g7_2026-06-18.csv`.
+> The AArch64 table uses the human-readable `*_run.txt` invocations. The
+> companion AArch64 CSV files are independent `--csv` invocations for
+> machine-readable archival data, so absolute MB/s values can differ slightly
+> while the reported AES-256/R256 slowdown is unchanged.
 
 ## Project Structure
 
