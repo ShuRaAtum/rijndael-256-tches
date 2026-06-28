@@ -1,0 +1,34 @@
+# x86-64 AES-NI Rijndael-256 benchmark — raw output
+# host:     13th Gen Intel(R) Core(TM) i7-13700KF (Raptor Lake; AES-NI + VAES, NO AVX-512)
+# date:     2026-06-18
+# compiler: cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+# governor: powersave (CPU max 5400 MHz / min 800 MHz)
+# code:     rijndael256_aesni.c (AES-NI 128-bit, 4-block interleaved _x4)
+# command:  make benchmark   # CFLAGS: -O3 -maes -mavx -mssse3 -msse4.1
+#
+## --- KAT (make test) ---
+[k128] PASS  [k192] PASS  [k256] PASS  [sweep 1000] PASS  [x4] PASS
+#
+## --- run 1 (default flags) ---
+                 GB/s     cyc/byte
+AES-128 (10R):  16.90     0.202
+AES-256 (14R):  12.29     0.278
+R256    (14R):   3.61     0.947
+
+AES->R256 slowdown/byte : vs AES-128 4.68x ; vs AES-256 3.40x (round-matched)
+
+## --- run 2 (default flags) ---
+                 GB/s     cyc/byte
+AES-128 (10R):  17.22     0.198
+AES-256 (14R):  12.29     0.278
+R256    (14R):   3.61     0.947
+
+AES->R256 slowdown/byte : vs AES-128 4.77x ; vs AES-256 3.41x (round-matched)
+
+## --- run 3 (-march=native; identical path, sensitivity check) ---
+                 GB/s     cyc/byte
+AES-128 (10R):  17.22     0.198
+AES-256 (14R):  12.29     0.278
+R256    (14R):   3.61     0.948
+
+AES->R256 slowdown/byte : vs AES-128 4.78x ; vs AES-256 3.41x (round-matched)

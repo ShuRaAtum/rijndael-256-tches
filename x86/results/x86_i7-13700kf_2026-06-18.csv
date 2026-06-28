@@ -1,0 +1,4 @@
+host,date,compiler,flags,cipher,rounds,impl,gb_per_s,cyc_per_byte,slowdown_vs_aes128,slowdown_vs_aes256
+i7-13700KF,2026-06-18,gcc-13.3.0,"-O3 -maes -mavx -mssse3 -msse4.1",AES-128,10,AES-NI x4,17.22,0.198,1.00,
+i7-13700KF,2026-06-18,gcc-13.3.0,"-O3 -maes -mavx -mssse3 -msse4.1",AES-256,14,AES-NI x4,12.29,0.278,,1.00
+i7-13700KF,2026-06-18,gcc-13.3.0,"-O3 -maes -mavx -mssse3 -msse4.1",Rijndael-256,14,AES-NI blend+pshufb x4,3.61,0.947,4.77,3.41

@@ -1,0 +1,37 @@
+Rijndael-256 FEAT_DIT on/off overhead — Apple M2 — 2026-06-18
+=============================================================
+
+Date:       2026-06-18
+Device:     Apple M2 (P-core, up to 3.49 GHz)
+OS:         macOS 26.2 (Darwin kernel 25.2.0, build 25C56)
+Toolchain:  Apple clang 17.0.0 (clang-1700.6.3.2)
+Flags:      -O3 -Wall -arch arm64 -march=armv8.4-a+crypto  (armv8.4-a needed for the DIT sysreg)
+ISA:        ARMv8-A + Crypto Extension; FEAT_DIT present (sysctl hw.optional.arm.FEAT_DIT = 1)
+
+What:       A/B throughput of the AddRoundKey-folded ARM-Crypto Rijndael-256 encrypt loop with
+            PSTATE.DIT = 0 vs 1. DIT toggled at EL0 via `msr DIT, #0/#1`, confirmed by `mrs Xt, DIT`
+            read-back (bit 24): set#1 -> 1, set#0 -> 0 (OK).
+Harness:    aarch64/bench_dit.c (`make bench_dit`).
+Config:     32-byte blocks, 1,048,576 blocks/pass (32 MB; AES-limited ~4 GB/s -> compute-bound),
+            single-block and interleaved x4 (M2-optimal). Off/on passes interleaved,
+            best-of-50 to cancel thermal drift. Timer: clock_gettime CLOCK_MONOTONIC.
+
+Result (best-of-50):
+  regime   DIT-off       DIT-on        overhead
+  single   4178.6 MB/s   4180.3 MB/s   -0.04%
+  x4       6531.9 MB/s   6535.9 MB/s   -0.06%
+
+  => No measurable overhead from enabling FEAT_DIT (|overhead| <= 0.1%, within run-to-run noise;
+     DIT-on was marginally faster, so the sign is noise). This is expected: AESE/AESMC are already
+     data-independent on Apple Silicon, so setting PSTATE.DIT adds no cost to the AES-based path.
+     Comfortably supports (and tightens) the paper's "<=0.3%" claim -> replace the unbacked
+     assertion with this measured result.
+
+Correctness:
+  Underlying folded Rijndael-256 KAT PASS (aarch64 `make test` + the benchmark binary's folded
+  self-test). DIT toggle verified by read-back in each direction.
+
+Raw data: apple_m2_dit_2026-06-18.csv (regime,dit,throughput_mbps,time_ms).
+
+Reproduce:
+  cd aarch64 && make bench_dit      # builds rijndael256_bench_dit (armv8.4-a) and runs it

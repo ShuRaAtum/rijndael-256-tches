@@ -1,0 +1,37 @@
+key_bits,impl,direction,time_ms,throughput_mbps
+128,Reference,encrypt,232.74,137.50
+128,Reference,decrypt,287.94,111.13
+128,T-table,encrypt,69.87,458.01
+128,T-table,decrypt,139.12,230.02
+128,NEON Single,encrypt,262.58,121.87
+128,NEON Single,decrypt,N/A,N/A
+128,NEON 4PT,encrypt,65.55,488.19
+128,NEON 4PT,decrypt,N/A,N/A
+128,NEON IL 4PT,encrypt,73.12,437.62
+128,NEON IL 4PT,decrypt,N/A,N/A
+128,ARM Crypto,encrypt,14.65,2184.66
+128,ARM Crypto,decrypt,15.55,2057.45
+192,Reference,encrypt,230.41,138.88
+192,Reference,decrypt,287.84,111.17
+192,T-table,encrypt,70.03,456.93
+192,T-table,decrypt,139.16,229.95
+192,NEON Single,encrypt,262.75,121.79
+192,NEON Single,decrypt,N/A,N/A
+192,NEON 4PT,encrypt,65.44,489.03
+192,NEON 4PT,decrypt,N/A,N/A
+192,NEON IL 4PT,encrypt,73.31,436.49
+192,NEON IL 4PT,decrypt,N/A,N/A
+192,ARM Crypto,encrypt,14.66,2182.51
+192,ARM Crypto,decrypt,15.51,2063.49
+256,Reference,encrypt,230.42,138.88
+256,Reference,decrypt,288.00,111.11
+256,T-table,encrypt,70.45,454.24
+256,T-table,decrypt,139.08,230.08
+256,NEON Single,encrypt,262.20,122.05
+256,NEON Single,decrypt,N/A,N/A
+256,NEON 4PT,encrypt,65.59,487.88
+256,NEON 4PT,decrypt,N/A,N/A
+256,NEON IL 4PT,encrypt,73.14,437.51
+256,NEON IL 4PT,decrypt,N/A,N/A
+256,ARM Crypto,encrypt,14.62,2189.02
+256,ARM Crypto,decrypt,15.53,2060.25

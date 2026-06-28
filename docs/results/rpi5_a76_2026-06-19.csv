@@ -1,0 +1,13 @@
+key_bits,impl,regime,throughput_mbps
+128,AES-128,single,2476.68
+256,AES-256,single,1938.42
+256,R256-folded,single,609.42
+128,AES-128,x2,3277.15
+256,AES-256,x2,2432.31
+256,R256-folded,x2,1015.18
+128,AES-128,x4,2529.19
+256,AES-256,x4,1934.37
+256,R256-folded,x4,988.58
+128,AES-128,x8,2684.93
+256,AES-256,x8,2098.13
+256,R256-folded,x8,990.05

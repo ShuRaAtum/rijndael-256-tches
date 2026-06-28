@@ -1,0 +1,24 @@
+CUDA devices found: 1
+
+Device 0: NVIDIA GeForce RTX 4080
+  Compute Capability: 8.9
+  Global Memory: 16071 MB
+  Shared Memory per Block: 49152 bytes
+  Shared Memory per SM: 102400 bytes
+  Max Threads per Block: 1024
+  Multiprocessors: 76
+  Warp Size: 32
+  Clock Rate: 2505 MHz
+  Memory Clock Rate: 11201 MHz
+
+  Rijndael-256 Shared Memory Analysis:
+    ECB/CTR V2: 8192 bytes (17% of per-block shared memory)
+    ECB/CTR V3: 36864 bytes (75% of per-block shared memory)
+    ES V2:      8448 bytes (17% of per-block shared memory)
+    ES V3:      37120 bytes (76% of per-block shared memory)
+    Note: V3 is bank-conflict-free in the main rounds only;
+          final-round T4/T4i tables remain plain 1D shared arrays.
+    ECB/CTR V2 max blocks per SM (memory limited): 12
+    ECB/CTR V3 max blocks per SM (memory limited): 2
+    ES V2 max blocks per SM (memory limited): 12
+    ES V3 max blocks per SM (memory limited): 2

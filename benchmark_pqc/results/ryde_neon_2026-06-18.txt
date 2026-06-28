@@ -1,0 +1,55 @@
+RYDE NEON Rijndael-256 benchmark — Apple M2 — 2026-06-18
+========================================================
+Device:    Apple M2 (P-core), macOS 26.2 (Darwin kernel 25.2.0, build 25C56)
+Toolchain: Apple clang 17.0.0 (clang-1700.6.3.2)
+Code:      ../2nd-additional_signature/RYDE/Reference_Implementation/ryde{3f,5f}
+Build:     NEON = make ryde{3f,5f}-neon-bench  (-O3 -flto -DOPT_ARM -DUSE_NEON;
+                  ggm_tree + tcith recompiled against single-block NEON Rijndael-256)
+           ARM  = make ryde{3f,5f}-arm-bench   (-O3 -flto -DOPT_ARM; ARM-Crypto Rijndael-256)
+Timer:     CNTVCT_EL0 ticks; src/bench.c WARMUP_ITERS=3, measure iters=10
+Metric:    avg_total_cycles = per-stage cost; avg_rijndael_cycles = Rijndael portion; ratio = %.
+KAT:       NEON Rijndael-256 KAT PASS (main repo aarch64 `make test`: NEON Single/4PT/IL all PASS);
+           RYDE sign->verify roundtrip succeeds for every iteration (bench aborts on any failure).
+Note:      NEON here is SINGLE-BLOCK. The fast 4-block neon_4pt path is inapplicable because RYDE
+           expands a DIFFERENT key per GGM-tree node (same limitation as MQOM). Single-block NEON
+           Rijndael is ~3.5-3.8x slower than ARM-Crypto, so the NEON column is reported for
+           completeness; ARM-Crypto remains the recommended fast path on a Crypto-Extension core.
+ARM rows are a same-machine sanity re-run vs the committed benchmark_summary.md §3 numbers.
+
+--- ryde3f (Level 3, 192-bit) NEON ---
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=3624 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=883760 avg_rijndael_cycles=455787 ratio=51.573617 avg_calls=19993
+PROFILE verify avg_total_cycles=812983 avg_rijndael_cycles=452115 ratio=55.611864 avg_calls=19718
+
+--- ryde3f (Level 3) ARM-Crypto (sanity; committed sign=541,176 verify=467,798) ---
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=2556 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=551595 avg_rijndael_cycles=123055 ratio=22.308940 avg_calls=19993
+PROFILE verify avg_total_cycles=484227 avg_rijndael_cycles=123065 ratio=25.414733 avg_calls=19718
+
+--- ryde5f (Level 5, 256-bit) NEON ---
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=4915 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1692412 avg_rijndael_cycles=574667 ratio=33.955503 avg_calls=27683
+PROFILE verify avg_total_cycles=1472767 avg_rijndael_cycles=571430 ratio=38.799756 avg_calls=27306
+
+--- ryde5f (Level 5) ARM-Crypto (sanity; committed sign=1,272,354 verify=1,043,226) ---
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=4967 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1281383 avg_rijndael_cycles=164793 ratio=12.860558 avg_calls=27683
+PROFILE verify avg_total_cycles=1054953 avg_rijndael_cycles=160550 ratio=15.218687 avg_calls=27306
+
+Derived — speedup vs committed Reference (benchmark_summary.md §3 RYDE):
+  ryde3f Reference: sign 57,459,608  verify 56,999,935
+  ryde5f Reference: sign 72,010,636  verify 70,098,943
+
+  ryde3f NEON: sign 883,760   (65.0x)  verify 812,983   (70.1x)   [ARM-Crypto committed: 106.2x / 121.9x]
+  ryde5f NEON: sign 1,692,412 (42.5x)  verify 1,472,767 (47.6x)   [ARM-Crypto committed:  56.6x /  67.2x]
+
+  Rijndael portion only, NEON vs ARM-Crypto (single-block penalty):
+  ryde3f: 455,787 / 123,055 = 3.70x slower     ryde5f: 574,667 / 164,793 = 3.49x slower
+
+Conclusion: single-block NEON Rijndael-256 trails ARM-Crypto by ~3.5x on this Crypto-Extension
+core. The NEON column is now filled (measured), but ARM-Crypto remains RYDE's recommended path;
+the fast 4-block neon_4pt cannot be used (different key per GGM node, identical to MQOM).

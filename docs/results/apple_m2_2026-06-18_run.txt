@@ -1,0 +1,649 @@
+========================================
+    Rijndael-256 Benchmark
+========================================
+
+Configuration:
+  Block size:    32 bytes (256 bits)
+  Key sizes:     128, 192, 256 bits
+  Blocks:        1048576 (32.0 MB)
+  Iterations:    10
+
+ARM Crypto Extension: Available
+
+========================================
+    Key Size: 128 bits (14 rounds)
+========================================
+
+Warming up...
+
+Running benchmarks (10 iterations)...
+
+Iteration 1/10:
+  [Encrypt]
+  Reference      :   232.11 ms    137.86 MB/s    1.00x
+  T-table        :    69.81 ms    458.37 MB/s    3.32x
+  NEON Single    :   262.43 ms    121.93 MB/s    0.88x
+  NEON 4PT       :    65.31 ms    490.00 MB/s    3.55x
+  NEON IL 4PT    :    73.13 ms    437.60 MB/s    3.17x
+  ARM Crypto     :    14.66 ms   2182.21 MB/s   15.83x
+  [Decrypt]
+  Reference      :   287.89 ms    111.15 MB/s    1.00x
+  T-table        :   139.63 ms    229.18 MB/s    2.06x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.51 ms   2063.58 MB/s   18.57x
+
+Iteration 2/10:
+  [Encrypt]
+  Reference      :   230.29 ms    138.95 MB/s    1.00x
+  T-table        :    69.99 ms    457.20 MB/s    3.29x
+  NEON Single    :   262.35 ms    121.97 MB/s    0.88x
+  NEON 4PT       :    65.54 ms    488.23 MB/s    3.51x
+  NEON IL 4PT    :    72.95 ms    438.67 MB/s    3.16x
+  ARM Crypto     :    14.65 ms   2184.60 MB/s   15.72x
+  [Decrypt]
+  Reference      :   288.38 ms    110.97 MB/s    1.00x
+  T-table        :   139.00 ms    230.22 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.46 ms   2069.86 MB/s   18.65x
+
+Iteration 3/10:
+  [Encrypt]
+  Reference      :   230.29 ms    138.96 MB/s    1.00x
+  T-table        :    69.72 ms    458.97 MB/s    3.30x
+  NEON Single    :   262.19 ms    122.05 MB/s    0.88x
+  NEON 4PT       :    65.22 ms    490.63 MB/s    3.53x
+  NEON IL 4PT    :    73.27 ms    436.72 MB/s    3.14x
+  ARM Crypto     :    14.86 ms   2153.29 MB/s   15.50x
+  [Decrypt]
+  Reference      :   288.61 ms    110.87 MB/s    1.00x
+  T-table        :   138.78 ms    230.59 MB/s    2.08x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.55 ms   2058.14 MB/s   18.56x
+
+Iteration 4/10:
+  [Encrypt]
+  Reference      :   230.40 ms    138.89 MB/s    1.00x
+  T-table        :    69.54 ms    460.15 MB/s    3.31x
+  NEON Single    :   262.39 ms    121.96 MB/s    0.88x
+  NEON 4PT       :    66.07 ms    484.36 MB/s    3.49x
+  NEON IL 4PT    :    73.17 ms    437.31 MB/s    3.15x
+  ARM Crypto     :    14.66 ms   2183.41 MB/s   15.72x
+  [Decrypt]
+  Reference      :   287.76 ms    111.20 MB/s    1.00x
+  T-table        :   139.11 ms    230.03 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.56 ms   2056.69 MB/s   18.50x
+
+Iteration 5/10:
+  [Encrypt]
+  Reference      :   230.37 ms    138.91 MB/s    1.00x
+  T-table        :    69.78 ms    458.62 MB/s    3.30x
+  NEON Single    :   262.99 ms    121.68 MB/s    0.88x
+  NEON 4PT       :    65.42 ms    489.17 MB/s    3.52x
+  NEON IL 4PT    :    73.25 ms    436.87 MB/s    3.15x
+  ARM Crypto     :    14.69 ms   2177.61 MB/s   15.68x
+  [Decrypt]
+  Reference      :   290.04 ms    110.33 MB/s    1.00x
+  T-table        :   139.15 ms    229.96 MB/s    2.08x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.44 ms   2072.81 MB/s   18.79x
+
+Iteration 6/10:
+  [Encrypt]
+  Reference      :   230.35 ms    138.92 MB/s    1.00x
+  T-table        :    70.53 ms    453.73 MB/s    3.27x
+  NEON Single    :   262.50 ms    121.90 MB/s    0.88x
+  NEON 4PT       :    65.32 ms    489.90 MB/s    3.53x
+  NEON IL 4PT    :    73.03 ms    438.17 MB/s    3.15x
+  ARM Crypto     :    14.63 ms   2186.99 MB/s   15.74x
+  [Decrypt]
+  Reference      :   287.54 ms    111.29 MB/s    1.00x
+  T-table        :   138.99 ms    230.23 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.43 ms   2073.61 MB/s   18.63x
+
+Iteration 7/10:
+  [Encrypt]
+  Reference      :   230.78 ms    138.66 MB/s    1.00x
+  T-table        :    69.71 ms    459.08 MB/s    3.31x
+  NEON Single    :   262.23 ms    122.03 MB/s    0.88x
+  NEON 4PT       :    65.55 ms    488.16 MB/s    3.52x
+  NEON IL 4PT    :    72.97 ms    438.54 MB/s    3.16x
+  ARM Crypto     :    14.75 ms   2169.20 MB/s   15.64x
+  [Decrypt]
+  Reference      :   287.40 ms    111.35 MB/s    1.00x
+  T-table        :   139.87 ms    228.79 MB/s    2.05x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.46 ms   2069.72 MB/s   18.59x
+
+Iteration 8/10:
+  [Encrypt]
+  Reference      :   230.35 ms    138.92 MB/s    1.00x
+  T-table        :    69.80 ms    458.43 MB/s    3.30x
+  NEON Single    :   262.32 ms    121.99 MB/s    0.88x
+  NEON 4PT       :    65.41 ms    489.19 MB/s    3.52x
+  NEON IL 4PT    :    73.24 ms    436.90 MB/s    3.14x
+  ARM Crypto     :    14.63 ms   2187.44 MB/s   15.75x
+  [Decrypt]
+  Reference      :   288.14 ms    111.06 MB/s    1.00x
+  T-table        :   139.07 ms    230.10 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.60 ms   2051.41 MB/s   18.47x
+
+Iteration 9/10:
+  [Encrypt]
+  Reference      :   230.48 ms    138.84 MB/s    1.00x
+  T-table        :    69.80 ms    458.44 MB/s    3.30x
+  NEON Single    :   262.13 ms    122.08 MB/s    0.88x
+  NEON 4PT       :    65.26 ms    490.35 MB/s    3.53x
+  NEON IL 4PT    :    73.12 ms    437.62 MB/s    3.15x
+  ARM Crypto     :    14.58 ms   2194.94 MB/s   15.81x
+  [Decrypt]
+  Reference      :   288.36 ms    110.97 MB/s    1.00x
+  T-table        :   139.19 ms    229.90 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.40 ms   2077.25 MB/s   18.72x
+
+Iteration 10/10:
+  [Encrypt]
+  Reference      :   230.55 ms    138.80 MB/s    1.00x
+  T-table        :    69.59 ms    459.81 MB/s    3.31x
+  NEON Single    :   262.40 ms    121.95 MB/s    0.88x
+  NEON 4PT       :    65.69 ms    487.10 MB/s    3.51x
+  NEON IL 4PT    :    73.45 ms    435.65 MB/s    3.14x
+  ARM Crypto     :    14.67 ms   2181.32 MB/s   15.72x
+  [Decrypt]
+  Reference      :   287.77 ms    111.20 MB/s    1.00x
+  T-table        :   138.77 ms    230.60 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.45 ms   2071.33 MB/s   18.63x
+
+========================================
+    Summary: 128-bit key (avg over 10 runs)
+========================================
+
+Implementation    Time (ms)    Throughput   Speedup
+---------------  ----------  ------------  --------
+
+  [Encrypt]
+  Reference      :   230.60 ms    138.77 MB/s    1.00x
+  T-table        :    69.83 ms    458.27 MB/s    3.30x
+  NEON Single    :   262.39 ms    121.95 MB/s    0.88x
+  NEON 4PT       :    65.48 ms    488.70 MB/s    3.52x
+  NEON IL 4PT    :    73.16 ms    437.40 MB/s    3.15x
+  ARM Crypto     :    14.68 ms   2180.04 MB/s   15.71x
+
+  [Decrypt]
+  Reference      :   288.19 ms    111.04 MB/s    1.00x
+  T-table        :   139.15 ms    229.96 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.49 ms   2066.41 MB/s   18.61x
+
+  Performance Analysis (Encrypt):
+    T-table vs Reference:      3.30x faster
+    NEON 4PT vs Reference:     3.52x faster
+    NEON 4PT vs T-table:       1.07x faster
+    NEON IL 4PT vs Reference:  3.15x faster
+    NEON IL 4PT vs NEON 4PT:   0.90x
+    ARM Crypto vs Reference:   15.71x faster
+    ARM Crypto vs T-table:     4.76x faster
+    ARM Crypto vs NEON 4PT:    4.46x faster
+
+  Performance Analysis (Decrypt):
+    T-table vs Reference:      2.07x faster
+    ARM Crypto vs Reference:   18.61x faster
+    ARM Crypto vs T-table:     8.99x faster
+
+========================================
+    Key Size: 192 bits (14 rounds)
+========================================
+
+Warming up...
+
+Running benchmarks (10 iterations)...
+
+Iteration 1/10:
+  [Encrypt]
+  Reference      :   230.29 ms    138.96 MB/s    1.00x
+  T-table        :    70.11 ms    456.41 MB/s    3.28x
+  NEON Single    :   262.68 ms    121.82 MB/s    0.88x
+  NEON 4PT       :    65.27 ms    490.29 MB/s    3.53x
+  NEON IL 4PT    :    73.42 ms    435.87 MB/s    3.14x
+  ARM Crypto     :    14.67 ms   2181.77 MB/s   15.70x
+  [Decrypt]
+  Reference      :   290.84 ms    110.03 MB/s    1.00x
+  T-table        :   138.71 ms    230.70 MB/s    2.10x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.59 ms   2053.26 MB/s   18.66x
+
+Iteration 2/10:
+  [Encrypt]
+  Reference      :   230.22 ms    139.00 MB/s    1.00x
+  T-table        :    70.45 ms    454.20 MB/s    3.27x
+  NEON Single    :   262.68 ms    121.82 MB/s    0.88x
+  NEON 4PT       :    65.25 ms    490.40 MB/s    3.53x
+  NEON IL 4PT    :    72.99 ms    438.40 MB/s    3.15x
+  ARM Crypto     :    14.74 ms   2170.96 MB/s   15.62x
+  [Decrypt]
+  Reference      :   287.62 ms    111.26 MB/s    1.00x
+  T-table        :   138.85 ms    230.46 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.43 ms   2073.34 MB/s   18.64x
+
+Iteration 3/10:
+  [Encrypt]
+  Reference      :   230.87 ms    138.60 MB/s    1.00x
+  T-table        :    70.08 ms    456.61 MB/s    3.29x
+  NEON Single    :   262.13 ms    122.08 MB/s    0.88x
+  NEON 4PT       :    65.49 ms    488.61 MB/s    3.53x
+  NEON IL 4PT    :    73.00 ms    438.36 MB/s    3.16x
+  ARM Crypto     :    14.76 ms   2168.46 MB/s   15.64x
+  [Decrypt]
+  Reference      :   287.45 ms    111.32 MB/s    1.00x
+  T-table        :   139.42 ms    229.53 MB/s    2.06x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.51 ms   2063.19 MB/s   18.53x
+
+Iteration 4/10:
+  [Encrypt]
+  Reference      :   230.67 ms    138.73 MB/s    1.00x
+  T-table        :    70.18 ms    455.95 MB/s    3.29x
+  NEON Single    :   262.31 ms    121.99 MB/s    0.88x
+  NEON 4PT       :    65.36 ms    489.57 MB/s    3.53x
+  NEON IL 4PT    :    73.07 ms    437.94 MB/s    3.16x
+  ARM Crypto     :    14.69 ms   2177.76 MB/s   15.70x
+  [Decrypt]
+  Reference      :   288.79 ms    110.81 MB/s    1.00x
+  T-table        :   138.99 ms    230.23 MB/s    2.08x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.44 ms   2072.67 MB/s   18.71x
+
+Iteration 5/10:
+  [Encrypt]
+  Reference      :   230.39 ms    138.89 MB/s    1.00x
+  T-table        :    70.12 ms    456.38 MB/s    3.29x
+  NEON Single    :   262.06 ms    122.11 MB/s    0.88x
+  NEON 4PT       :    65.25 ms    490.40 MB/s    3.53x
+  NEON IL 4PT    :    72.86 ms    439.18 MB/s    3.16x
+  ARM Crypto     :    14.62 ms   2189.23 MB/s   15.76x
+  [Decrypt]
+  Reference      :   288.35 ms    110.98 MB/s    1.00x
+  T-table        :   138.90 ms    230.38 MB/s    2.08x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.51 ms   2062.92 MB/s   18.59x
+
+Iteration 6/10:
+  [Encrypt]
+  Reference      :   230.25 ms    138.98 MB/s    1.00x
+  T-table        :    70.35 ms    454.88 MB/s    3.27x
+  NEON Single    :   262.23 ms    122.03 MB/s    0.88x
+  NEON 4PT       :    65.42 ms    489.11 MB/s    3.52x
+  NEON IL 4PT    :    73.95 ms    432.71 MB/s    3.11x
+  ARM Crypto     :    14.66 ms   2183.26 MB/s   15.71x
+  [Decrypt]
+  Reference      :   287.45 ms    111.32 MB/s    1.00x
+  T-table        :   139.06 ms    230.11 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.47 ms   2068.25 MB/s   18.58x
+
+Iteration 7/10:
+  [Encrypt]
+  Reference      :   230.20 ms    139.01 MB/s    1.00x
+  T-table        :    70.17 ms    456.04 MB/s    3.28x
+  NEON Single    :   263.05 ms    121.65 MB/s    0.88x
+  NEON 4PT       :    65.47 ms    488.77 MB/s    3.52x
+  NEON IL 4PT    :    72.92 ms    438.83 MB/s    3.16x
+  ARM Crypto     :    14.81 ms   2161.14 MB/s   15.55x
+  [Decrypt]
+  Reference      :   287.61 ms    111.26 MB/s    1.00x
+  T-table        :   138.88 ms    230.42 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.45 ms   2071.06 MB/s   18.61x
+
+Iteration 8/10:
+  [Encrypt]
+  Reference      :   230.35 ms    138.92 MB/s    1.00x
+  T-table        :    70.11 ms    456.45 MB/s    3.29x
+  NEON Single    :   262.92 ms    121.71 MB/s    0.88x
+  NEON 4PT       :    65.43 ms    489.07 MB/s    3.52x
+  NEON IL 4PT    :    73.19 ms    437.21 MB/s    3.15x
+  ARM Crypto     :    14.62 ms   2189.23 MB/s   15.76x
+  [Decrypt]
+  Reference      :   287.92 ms    111.14 MB/s    1.00x
+  T-table        :   139.07 ms    230.11 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.55 ms   2058.54 MB/s   18.52x
+
+Iteration 9/10:
+  [Encrypt]
+  Reference      :   231.00 ms    138.53 MB/s    1.00x
+  T-table        :    70.22 ms    455.70 MB/s    3.29x
+  NEON Single    :   262.15 ms    122.07 MB/s    0.88x
+  NEON 4PT       :    67.64 ms    473.12 MB/s    3.42x
+  NEON IL 4PT    :    73.23 ms    436.99 MB/s    3.15x
+  ARM Crypto     :    14.59 ms   2193.58 MB/s   15.84x
+  [Decrypt]
+  Reference      :   287.38 ms    111.35 MB/s    1.00x
+  T-table        :   139.86 ms    228.80 MB/s    2.05x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.54 ms   2059.86 MB/s   18.50x
+
+Iteration 10/10:
+  [Encrypt]
+  Reference      :   230.87 ms    138.60 MB/s    1.00x
+  T-table        :    70.35 ms    454.88 MB/s    3.28x
+  NEON Single    :   261.95 ms    122.16 MB/s    0.88x
+  NEON 4PT       :    67.14 ms    476.62 MB/s    3.44x
+  NEON IL 4PT    :    73.77 ms    433.78 MB/s    3.13x
+  ARM Crypto     :    14.64 ms   2185.49 MB/s   15.77x
+  [Decrypt]
+  Reference      :   287.69 ms    111.23 MB/s    1.00x
+  T-table        :   139.78 ms    228.94 MB/s    2.06x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.44 ms   2072.00 MB/s   18.63x
+
+========================================
+    Summary: 192-bit key (avg over 10 runs)
+========================================
+
+Implementation    Time (ms)    Throughput   Speedup
+---------------  ----------  ------------  --------
+
+  [Encrypt]
+  Reference      :   230.51 ms    138.82 MB/s    1.00x
+  T-table        :    70.21 ms    455.75 MB/s    3.28x
+  NEON Single    :   262.42 ms    121.94 MB/s    0.88x
+  NEON 4PT       :    65.77 ms    486.52 MB/s    3.50x
+  NEON IL 4PT    :    73.24 ms    436.92 MB/s    3.15x
+  ARM Crypto     :    14.68 ms   2180.04 MB/s   15.70x
+
+  [Decrypt]
+  Reference      :   288.11 ms    111.07 MB/s    1.00x
+  T-table        :   139.15 ms    229.97 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.49 ms   2065.49 MB/s   18.60x
+
+  Performance Analysis (Encrypt):
+    T-table vs Reference:      3.28x faster
+    NEON 4PT vs Reference:     3.50x faster
+    NEON 4PT vs T-table:       1.07x faster
+    NEON IL 4PT vs Reference:  3.15x faster
+    NEON IL 4PT vs NEON 4PT:   0.90x
+    ARM Crypto vs Reference:   15.70x faster
+    ARM Crypto vs T-table:     4.78x faster
+    ARM Crypto vs NEON 4PT:    4.48x faster
+
+  Performance Analysis (Decrypt):
+    T-table vs Reference:      2.07x faster
+    ARM Crypto vs Reference:   18.60x faster
+    ARM Crypto vs T-table:     8.98x faster
+
+========================================
+    Key Size: 256 bits (14 rounds)
+========================================
+
+Warming up...
+
+Running benchmarks (10 iterations)...
+
+Iteration 1/10:
+  [Encrypt]
+  Reference      :   230.60 ms    138.77 MB/s    1.00x
+  T-table        :    70.29 ms    455.26 MB/s    3.28x
+  NEON Single    :   262.13 ms    122.08 MB/s    0.88x
+  NEON 4PT       :    65.37 ms    489.56 MB/s    3.53x
+  NEON IL 4PT    :    73.32 ms    436.41 MB/s    3.14x
+  ARM Crypto     :    14.65 ms   2183.56 MB/s   15.74x
+  [Decrypt]
+  Reference      :   288.34 ms    110.98 MB/s    1.00x
+  T-table        :   139.35 ms    229.64 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.51 ms   2062.52 MB/s   18.58x
+
+Iteration 2/10:
+  [Encrypt]
+  Reference      :   230.31 ms    138.94 MB/s    1.00x
+  T-table        :    70.74 ms    452.34 MB/s    3.26x
+  NEON Single    :   262.21 ms    122.04 MB/s    0.88x
+  NEON 4PT       :    65.54 ms    488.25 MB/s    3.51x
+  NEON IL 4PT    :    73.04 ms    438.09 MB/s    3.15x
+  ARM Crypto     :    14.98 ms   2136.32 MB/s   15.38x
+  [Decrypt]
+  Reference      :   288.04 ms    111.10 MB/s    1.00x
+  T-table        :   138.79 ms    230.57 MB/s    2.08x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.57 ms   2054.97 MB/s   18.50x
+
+Iteration 3/10:
+  [Encrypt]
+  Reference      :   230.44 ms    138.86 MB/s    1.00x
+  T-table        :    70.34 ms    454.93 MB/s    3.28x
+  NEON Single    :   262.57 ms    121.87 MB/s    0.88x
+  NEON 4PT       :    65.66 ms    487.37 MB/s    3.51x
+  NEON IL 4PT    :    72.96 ms    438.62 MB/s    3.16x
+  ARM Crypto     :    14.65 ms   2184.90 MB/s   15.73x
+  [Decrypt]
+  Reference      :   287.93 ms    111.14 MB/s    1.00x
+  T-table        :   140.54 ms    227.69 MB/s    2.05x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.48 ms   2067.58 MB/s   18.60x
+
+Iteration 4/10:
+  [Encrypt]
+  Reference      :   230.16 ms    139.04 MB/s    1.00x
+  T-table        :    70.63 ms    453.03 MB/s    3.26x
+  NEON Single    :   262.52 ms    121.90 MB/s    0.88x
+  NEON 4PT       :    65.36 ms    489.58 MB/s    3.52x
+  NEON IL 4PT    :    73.25 ms    436.84 MB/s    3.14x
+  ARM Crypto     :    14.65 ms   2184.15 MB/s   15.71x
+  [Decrypt]
+  Reference      :   290.00 ms    110.34 MB/s    1.00x
+  T-table        :   138.82 ms    230.51 MB/s    2.09x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.59 ms   2053.12 MB/s   18.61x
+
+Iteration 5/10:
+  [Encrypt]
+  Reference      :   230.28 ms    138.96 MB/s    1.00x
+  T-table        :    70.98 ms    450.84 MB/s    3.24x
+  NEON Single    :   262.36 ms    121.97 MB/s    0.88x
+  NEON 4PT       :    65.16 ms    491.10 MB/s    3.53x
+  NEON IL 4PT    :    73.19 ms    437.23 MB/s    3.15x
+  ARM Crypto     :    14.62 ms   2188.18 MB/s   15.75x
+  [Decrypt]
+  Reference      :   287.46 ms    111.32 MB/s    1.00x
+  T-table        :   138.80 ms    230.55 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.51 ms   2063.72 MB/s   18.54x
+
+Iteration 6/10:
+  [Encrypt]
+  Reference      :   230.90 ms    138.59 MB/s    1.00x
+  T-table        :    70.45 ms    454.19 MB/s    3.28x
+  NEON Single    :   262.33 ms    121.99 MB/s    0.88x
+  NEON 4PT       :    65.42 ms    489.15 MB/s    3.53x
+  NEON IL 4PT    :    73.12 ms    437.66 MB/s    3.16x
+  ARM Crypto     :    14.60 ms   2192.23 MB/s   15.82x
+  [Decrypt]
+  Reference      :   287.48 ms    111.31 MB/s    1.00x
+  T-table        :   139.50 ms    229.39 MB/s    2.06x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.47 ms   2068.65 MB/s   18.58x
+
+Iteration 7/10:
+  [Encrypt]
+  Reference      :   230.13 ms    139.05 MB/s    1.00x
+  T-table        :    70.38 ms    454.67 MB/s    3.27x
+  NEON Single    :   262.42 ms    121.94 MB/s    0.88x
+  NEON 4PT       :    65.31 ms    489.94 MB/s    3.52x
+  NEON IL 4PT    :    73.23 ms    436.97 MB/s    3.14x
+  ARM Crypto     :    14.57 ms   2196.14 MB/s   15.79x
+  [Decrypt]
+  Reference      :   287.65 ms    111.25 MB/s    1.00x
+  T-table        :   139.93 ms    228.69 MB/s    2.06x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.46 ms   2069.72 MB/s   18.60x
+
+Iteration 8/10:
+  [Encrypt]
+  Reference      :   230.38 ms    138.90 MB/s    1.00x
+  T-table        :    70.17 ms    456.03 MB/s    3.28x
+  NEON Single    :   262.53 ms    121.89 MB/s    0.88x
+  NEON 4PT       :    65.43 ms    489.09 MB/s    3.52x
+  NEON IL 4PT    :    73.12 ms    437.63 MB/s    3.15x
+  ARM Crypto     :    16.10 ms   1987.82 MB/s   14.31x
+  [Decrypt]
+  Reference      :   288.44 ms    110.94 MB/s    1.00x
+  T-table        :   139.66 ms    229.13 MB/s    2.07x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.43 ms   2074.42 MB/s   18.70x
+
+Iteration 9/10:
+  [Encrypt]
+  Reference      :   230.19 ms    139.02 MB/s    1.00x
+  T-table        :    70.51 ms    453.80 MB/s    3.26x
+  NEON Single    :   262.12 ms    122.08 MB/s    0.88x
+  NEON 4PT       :    66.01 ms    484.76 MB/s    3.49x
+  NEON IL 4PT    :    73.10 ms    437.77 MB/s    3.15x
+  ARM Crypto     :    14.68 ms   2180.13 MB/s   15.68x
+  [Decrypt]
+  Reference      :   287.49 ms    111.31 MB/s    1.00x
+  T-table        :   141.08 ms    226.82 MB/s    2.04x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.55 ms   2057.35 MB/s   18.48x
+
+Iteration 10/10:
+  [Encrypt]
+  Reference      :   230.12 ms    139.06 MB/s    1.00x
+  T-table        :    70.38 ms    454.69 MB/s    3.27x
+  NEON Single    :   262.73 ms    121.80 MB/s    0.88x
+  NEON 4PT       :    65.59 ms    487.87 MB/s    3.51x
+  NEON IL 4PT    :    73.57 ms    434.98 MB/s    3.13x
+  ARM Crypto     :    14.65 ms   2184.75 MB/s   15.71x
+  [Decrypt]
+  Reference      :   288.09 ms    111.08 MB/s    1.00x
+  T-table        :   140.85 ms    227.19 MB/s    2.05x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.65 ms   2044.73 MB/s   18.41x
+
+========================================
+    Summary: 256-bit key (avg over 10 runs)
+========================================
+
+Implementation    Time (ms)    Throughput   Speedup
+---------------  ----------  ------------  --------
+
+  [Encrypt]
+  Reference      :   230.35 ms    138.92 MB/s    1.00x
+  T-table        :    70.49 ms    453.98 MB/s    3.27x
+  NEON Single    :   262.39 ms    121.96 MB/s    0.88x
+  NEON 4PT       :    65.48 ms    488.66 MB/s    3.52x
+  NEON IL 4PT    :    73.19 ms    437.22 MB/s    3.15x
+  ARM Crypto     :    14.81 ms   2160.03 MB/s   15.55x
+
+  [Decrypt]
+  Reference      :   288.09 ms    111.08 MB/s    1.00x
+  T-table        :   139.73 ms    229.01 MB/s    2.06x
+  NEON Single    :      N/A          N/A          N/A
+  NEON 4PT       :      N/A          N/A          N/A
+  NEON IL 4PT    :      N/A          N/A          N/A
+  ARM Crypto     :    15.52 ms   2061.64 MB/s   18.56x
+
+  Performance Analysis (Encrypt):
+    T-table vs Reference:      3.27x faster
+    NEON 4PT vs Reference:     3.52x faster
+    NEON 4PT vs T-table:       1.08x faster
+    NEON IL 4PT vs Reference:  3.15x faster
+    NEON IL 4PT vs NEON 4PT:   0.89x
+    ARM Crypto vs Reference:   15.55x faster
+    ARM Crypto vs T-table:     4.76x faster
+    ARM Crypto vs NEON 4PT:    4.42x faster
+
+  Performance Analysis (Decrypt):
+    T-table vs Reference:      2.06x faster
+    ARM Crypto vs Reference:   18.56x faster
+    ARM Crypto vs T-table:     9.00x faster
+
+========================================
+    AES -> R256 : single-block vs interleaved (matched N)
+========================================
+
+  AES FIPS-197 self-test    : PASS
+  R256 folded KAT (+xN)     : PASS
+
+  Path               single        x2        x4        x8   (MB/s)
+  AES-128 (10R)     10335.9   12945.0   15252.6   17057.6
+  AES-256 (14R)      7710.8    9439.5   11721.6   12820.5
+  R256 folded        4196.7    5708.2    6520.0    2516.7
+  R256 EOR           2193.9   (reference; folded is the recommended path)
+
+  Best interleave depth for R256 folded: N=4
+
+  AES -> R256 per-byte slowdown (folded):
+    single-block     : 1.84x vs AES-256 | 2.46x vs AES-128
+    interleaved N=4  : 1.80x vs AES-256 | 2.34x vs AES-128   <- regime-matched to x86 VAES
+

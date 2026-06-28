@@ -1,0 +1,209 @@
+# Cortex-M4 ROM / Stack measurements (STM32F407, Rijndael-256)
+================================================================
+
+Method (same as the paper):
+  - ROM:   per-function with -ffunction-sections -fdata-sections
+           (arm-none-eabi-size / -nm --print-size)
+  - Stack: -fstack-usage for C functions
+           prologue inspection for assembly routines
+
+Toolchain: arm-none-eabi-gcc 13.2.1 (GNU Arm Embedded)
+Flags:     -mcpu=cortex-m4 -mthumb -O3
+           -ffunction-sections -fdata-sections -fstack-usage
+Host measurement date: 2026-04-14
+
+Units: bytes.
+
+
+================================================================
+1. ROM (code + constant tables)
+================================================================
+
+Per-function .text (from nm --print-size) and .rodata totals per
+translation unit (from size -A).
+
+----------------------------------------------------------------
+1.1 Native C   (cortexm4/native/rijndael256_native.c)
+----------------------------------------------------------------
+  function                            .text
+  r256_native_setup_key                 388
+  r256_native_encrypt                 2,452
+  r256_native_decrypt                 2,440
+  --------------------------------- -------
+  .text total                         5,280
+  .rodata (SBox 256 + InvSBox 256 + Rcon 120)
+                                        632
+  =============================== ========
+  ROM total                           5,912
+
+----------------------------------------------------------------
+1.2 T-table C   (cortexm4/ttable/rijndael256_ttable.c)
+----------------------------------------------------------------
+  function                            .text
+  r256_ttable_setup_key                 388
+  r256_ttable_encrypt                 1,112
+  r256_ttable_decrypt                 1,652
+  --------------------------------- -------
+  .text total                         3,152
+  .rodata
+    SBox 256 + InvSBox 256 + Rcon 120     632
+    Te0..Te3   (4 × 1024)               4,096
+    Td0..Td3   (4 × 1024)               4,096
+    InvMix0..3 (4 × 1024)               4,096
+  .rodata total                      12,920
+  =============================== ========
+  ROM total                          16,072
+
+----------------------------------------------------------------
+1.3 T-table ASM   (cortexm4/ttable_asm/)
+----------------------------------------------------------------
+  component                           .text  .rodata
+  rijndael256_encrypt.s  (asm enc)    1,092       —
+  rijndael256_impl.c:
+    r256_ttable_asm_setup_key           388       —
+    .rodata (SBox+Rcon+Te0=256+120+1024)  —    1,400
+  --------------------------------- ------- --------
+  ROM total                           1,480    1,400   =  2,880
+
+----------------------------------------------------------------
+1.4 Bitslice ASM   (cortexm4/bitslice/)
+----------------------------------------------------------------
+  component                           .text  .rodata
+  rijndael256_encrypt.s                2,220       —
+  rijndael256_decrypt.s                2,524       —
+  rijndael256_keysched.c:
+    r256_pack                            258       —
+    r256_setup_key                       496       —
+    r256_setup_decrypt_key             1,000       —
+    .rodata (SBox 256 + Rcon 120)         —      376
+  --------------------------------- ------- --------
+  ROM total                           6,498      376   =  6,874
+  (excluding rijndael256_decrypt_ref.c:
+   reference-only, 2,104 B, used only in host-side verify.)
+
+----------------------------------------------------------------
+1.5 Fixslice ASM   (cortexm4/fixslice/)
+----------------------------------------------------------------
+  component                           .text  .rodata
+  rijndael256_encrypt.s                7,020       —
+  rijndael256_keysched.c:
+    r256_pack                            258       —
+    r256_setup_key                     1,268       —
+    .rodata (SBox 256 + Rcon 120)         —      376
+  --------------------------------- ------- --------
+  ROM total                           8,546      376   =  8,922
+
+
+================================================================
+2. Stack
+================================================================
+
+C functions: static frame reported by -fstack-usage (.su files).
+ASM routines: prologue push/sub-sp inspection.
+
+----------------------------------------------------------------
+2.1 Native C   (source = -fstack-usage)
+----------------------------------------------------------------
+  r256_native_setup_key                  32  (static, C)
+  r256_native_encrypt                   240  (static, C)
+  r256_native_decrypt                   208  (static, C)
+
+----------------------------------------------------------------
+2.2 T-table C   (source = -fstack-usage)
+----------------------------------------------------------------
+  r256_ttable_setup_key                  32  (static, C)
+  r256_ttable_encrypt                   136  (static, C)
+  r256_ttable_decrypt                   624  (static, C)
+
+----------------------------------------------------------------
+2.3 T-table ASM
+----------------------------------------------------------------
+  r256_ttable_asm_setup_key              32  (static, C)
+  rijndael256_encrypt                    76  (ASM prologue:
+                                              push {r4-r11,lr} = 36
+                                              sub  sp, sp, #40 = 40)
+
+----------------------------------------------------------------
+2.4 Bitslice ASM
+----------------------------------------------------------------
+  r256_pack                              24  (static, C)
+  r256_setup_key                        552  (static, C)
+  r256_setup_decrypt_key                616  (static, C)
+  rijndael256_encrypt                    56  (ASM prologue:
+                                              push {r0-r12,r14} = 56)
+  rijndael256_decrypt                    56  (ASM prologue:
+                                              push {r0-r12,r14} = 56)
+
+----------------------------------------------------------------
+2.5 Fixslice ASM
+----------------------------------------------------------------
+  r256_pack                              24  (static, C)
+  r256_setup_key                        672  (static, C)
+  rijndael256_encrypt                    56  (ASM prologue:
+                                              push {r0-r12,r14} = 56)
+
+
+================================================================
+3. Paper table summary  (encrypt path only)
+================================================================
+
+  The paper reports the encryption path only:
+  encrypt routine + encryption key schedule + lookup tables needed for
+  encryption. Decrypt routines, inverse tables, and decrypt-key-schedule
+  helpers are excluded from the ROM column. Stack is the call-chain peak
+  across encryption and the encryption key schedule.
+
+  impl           ROM (B)   Stack (B)
+  -------------  -------   ---------
+  Native C         3,216         240
+  T-table C        5,972         136
+  T-table ASM      2,880          76
+  Bitslice ASM     3,352         576
+  Fixslice ASM     8,924         696
+
+  Notes:
+  - Bitslice stack is the encryption-key-schedule chain:
+    r256_setup_key (552) + r256_pack (24) = 576 B.
+  - Fixslice stack is the encryption-key-schedule chain:
+    r256_setup_key (672) + r256_pack (24) = 696 B.
+  - The full encrypt+decrypt breakdown above is retained for reference,
+    but it is not the convention used in the paper table.
+
+
+================================================================
+4. Reproduction
+================================================================
+
+From repo root:
+
+  cd cortexm4
+  CFLAGS="-mcpu=cortex-m4 -mthumb -O3 \
+         -ffunction-sections -fdata-sections -fstack-usage"
+  ASFLAGS="-mcpu=cortex-m4 -mthumb"
+
+  # Native C
+  arm-none-eabi-gcc $CFLAGS -c native/rijndael256_native.c
+
+  # T-table C
+  arm-none-eabi-gcc $CFLAGS -Ittable -c ttable/rijndael256_ttable.c
+
+  # T-table ASM
+  arm-none-eabi-gcc $CFLAGS -Ittable_asm -c ttable_asm/rijndael256_impl.c
+  arm-none-eabi-gcc $ASFLAGS           -c ttable_asm/rijndael256_encrypt.s
+
+  # Bitslice ASM
+  arm-none-eabi-gcc $CFLAGS -Ibitslice -c bitslice/rijndael256_keysched.c
+  arm-none-eabi-gcc $ASFLAGS           -c bitslice/rijndael256_encrypt.s
+  arm-none-eabi-gcc $ASFLAGS           -c bitslice/rijndael256_decrypt.s
+
+  # Fixslice ASM
+  arm-none-eabi-gcc $CFLAGS -Ifixslice -c fixslice/rijndael256_keysched.c
+  arm-none-eabi-gcc $ASFLAGS           -c fixslice/rijndael256_encrypt.s
+
+  # Extract sizes and stacks:
+  arm-none-eabi-nm --print-size --size-sort --radix=d *.o
+  arm-none-eabi-size -A *.o
+  cat *.su
+
+  # ASM stack: inspect prologue for push/sub sp
+  grep -nE '^\s*(push|sub\s+sp)' cortexm4/*/rijndael256_*.s

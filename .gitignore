@@ -1,0 +1,30 @@
+# Build artifacts
+*.o
+*.elf
+*.bin
+*.d
+
+# Host executables
+verify
+verify_host
+rijndael256_test
+rijndael256_benchmark
+rijndael256_benchmark_native
+rijndael256_bench_dit
+rijndael256_vaes_test
+rijndael256_vaes_benchmark
+
+# CMake
+build/
+CMakeCache.txt
+CMakeFiles/
+
+# Editor/IDE
+*.swp
+*~
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

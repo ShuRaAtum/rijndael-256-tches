@@ -1,0 +1,22 @@
+Rijndael-256 AArch64 Benchmark — Raspberry Pi 4
+================================================
+
+Date:       2026-03-18
+Device:     Raspberry Pi 4 Model B (Cortex-A72, ARMv8-A, 1.8 GHz)
+OS:         Debian GNU/Linux (kernel 6.12.62+rpt-rpi-v8)
+Memory:     4 GB LPDDR4
+Toolchain:  gcc (Debian 14.2.0-3) 14.2.0
+Flags:      -O3 -march=armv8-a
+ARM Crypto: Not available (CPU features: fp asimd evtstrm crc32 cpuid)
+
+Benchmark config:
+  Block size:   32 bytes (256 bits)
+  Data size:    32 MB (1,048,576 blocks)
+  Iterations:   10 (averaged)
+  Timer:        clock_gettime CLOCK_MONOTONIC
+
+Note: Nr = 14 for all key sizes (Nr = max(Nk, Nb) + 6, Nb = 8).
+Encrypt/decrypt throughput is functionally identical across 128/192/256-bit keys.
+Minor variation between key sizes is measurement noise.
+ARM Crypto Extension is not available on RPi4 — all ARM Crypto entries are N/A.
+NEON decrypt is not implemented — NEON decrypt entries are N/A.

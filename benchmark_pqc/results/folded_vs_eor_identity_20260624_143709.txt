@@ -1,0 +1,12 @@
+Per-scheme folded==EOR byte-identity (50000 random key/block pairs each)
+Wed Jun 24 14:37:09 KST 2026
+================================================================
+  MQOM-cat3 : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  MQOM-cat5 : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  Mirath-3a : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  Mirath-5a : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  RYDE-3f : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  RYDE-5f : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  SDitH-cat3 : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+  SDitH-cat5 : PASS  (50000 pairs: folded == EOR byte-identical (fails=0))
+================================================================

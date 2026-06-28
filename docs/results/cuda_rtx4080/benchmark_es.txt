@@ -1,0 +1,93 @@
+=== Rijndael-256 ES Benchmark ===
+
+Run metadata:
+  UTC timestamp: 2026-04-09T07:36:12Z
+  Validation: enabled
+  CSV output: benchmark-results/20260409T073608Z/es.csv
+  Command: build/benchmark_es --csv benchmark-results/20260409T073608Z/es.csv
+  Device 0: NVIDIA GeForce RTX 4080
+  Compute capability: 8.9
+  Global memory: 15.69 GiB
+  Multiprocessors: 76
+  Warp size: 32
+  Max threads/block: 1024
+  Shared memory/block: 49152 bytes
+  Shared memory/SM: 102400 bytes
+  CUDA runtime version: 12000
+  CUDA driver version: 12020
+
+Validation: passed for ES full and launch-only paths
+
+Search range: 2^18 = 262144 keys
+  Full API (setup + launch + synchronize + fetch)
+  warmup=1 iterations=3
+  Blocks       Threads      V2 (ms)        V3 (ms)        V2 keys/s      V3 keys/s     
+  ----------------------------------------------------------------------
+  256          256          0.154          0.187          1700544264     1405253763    
+  512          512          0.230          0.153          1140467248     1715523504    
+  1024         256          0.231          0.172          1136989846     1520783257    
+  1024         1024         0.174          0.159          1509295492     1644405506    
+  Best full API throughput: V2 1700544264 keys/s (256 x 256), V3 1715523504 keys/s (512 x 512)
+
+  Launch-only (setup once, timed kernel launches)
+  warmup=2 iterations=5
+  Blocks       Threads      V2 (ms)        V3 (ms)        V2 keys/s      V3 keys/s     
+  ----------------------------------------------------------------------
+  256          256          0.132          0.167          1981424237     1574415704    
+  512          512          0.210          0.134          1246348564     1954198528    
+  1024         256          0.209          0.153          1253481098     1713520787    
+  1024         1024         0.153          0.138          1713520787     1896471889    
+  Best launch-only throughput: V2 1981424237 keys/s (256 x 256), V3 1954198528 keys/s (512 x 512)
+
+Search range: 2^20 = 1048576 keys
+  Full API (setup + launch + synchronize + fetch)
+  warmup=1 iterations=3
+  Blocks       Threads      V2 (ms)        V3 (ms)        V2 keys/s      V3 keys/s     
+  ----------------------------------------------------------------------
+  256          256          0.535          0.661          1958900629     1587459099    
+  512          512          0.832          0.502          1259604211     2090705658    
+  1024         256          0.843          0.599          1244388395     1750676735    
+  1024         1024         0.536          0.498          1955619878     2105360097    
+  Best full API throughput: V2 1958900629 keys/s (256 x 256), V3 2105360097 keys/s (1024 x 1024)
+
+  Launch-only (setup once, timed kernel launches)
+  warmup=2 iterations=5
+  Blocks       Threads      V2 (ms)        V3 (ms)        V2 keys/s      V3 keys/s     
+  ----------------------------------------------------------------------
+  256          256          0.516          0.647          2031494066     1620974507    
+  512          512          0.816          0.479          1285140540     2188969537    
+  1024         256          0.822          0.579          1275535679     1811747991    
+  1024         1024         0.514          0.478          2041467301     2191986103    
+  Best launch-only throughput: V2 2041467301 keys/s (1024 x 1024), V3 2191986103 keys/s (1024 x 1024)
+
+Search range: 2^22 = 4194304 keys
+  Full API (setup + launch + synchronize + fetch)
+  warmup=1 iterations=3
+  Blocks       Threads      V2 (ms)        V3 (ms)        V2 keys/s      V3 keys/s     
+  ----------------------------------------------------------------------
+  256          256          2.025          2.645          2071070321     1585957467    
+  512          512          3.225          1.871          1300404003     2241201091    
+  1024         256          3.249          2.361          1291035210     1776138375    
+  1024         1024         1.924          1.771          2179795306     2368532091    
+  Best full API throughput: V2 2179795306 keys/s (1024 x 1024), V3 2368532091 keys/s (1024 x 1024)
+
+  Launch-only (setup once, timed kernel launches)
+  warmup=2 iterations=5
+  Blocks       Threads      V2 (ms)        V3 (ms)        V2 keys/s      V3 keys/s     
+  ----------------------------------------------------------------------
+  256          256          1.964          2.702          2135780655     1552456050    
+  512          512          3.219          1.846          1302798942     2271517369    
+  1024         256          3.253          2.473          1289266670     1696206697    
+  1024         1024         1.933          1.744          2170174047     2404584973    
+  Best launch-only throughput: V2 2170174047 keys/s (1024 x 1024), V3 2404584973 keys/s (1024 x 1024)
+
+Occupancy summary:
+  ES V2 @ 256 threads: 6 blocks/SM, 100.0% occupancy
+  ES V3 @ 256 threads: 2 blocks/SM, 33.3% occupancy
+  ES V2 @ 512 threads: 3 blocks/SM, 100.0% occupancy
+  ES V3 @ 512 threads: 2 blocks/SM, 66.7% occupancy
+  ES V2 @ 256 threads: 6 blocks/SM, 100.0% occupancy
+  ES V3 @ 256 threads: 2 blocks/SM, 33.3% occupancy
+  ES V2 @ 1024 threads: 1 blocks/SM, 66.7% occupancy
+  ES V3 @ 1024 threads: 1 blocks/SM, 66.7% occupancy
+

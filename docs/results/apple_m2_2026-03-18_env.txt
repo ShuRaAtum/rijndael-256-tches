@@ -1,0 +1,20 @@
+Rijndael-256 AArch64 Benchmark — Apple M2
+==========================================
+
+Date:       2026-03-18
+Device:     Apple M2 (Firestorm P-core, 3.49 GHz)
+OS:         macOS (Darwin 25.2.0)
+Memory:     8 GB unified LPDDR5
+Toolchain:  Apple clang 17.0.0 (clang-1700.6.3.2)
+Flags:      -O3 -march=armv8-a+crypto
+ARM Crypto: Available
+
+Benchmark config:
+  Block size:   32 bytes (256 bits)
+  Data size:    32 MB (1,048,576 blocks)
+  Iterations:   10 (averaged)
+  Timer:        clock_gettime CLOCK_MONOTONIC
+
+Note: Nr = 14 for all key sizes (Nr = max(Nk, Nb) + 6, Nb = 8).
+Encrypt/decrypt throughput is functionally identical across 128/192/256-bit keys.
+Minor variation between key sizes is measurement noise.

@@ -1,0 +1,14 @@
+Final PQC Benchmark — Sat Mar 21 15:02:56 KST 2026
+Platform: arm64
+
+=== SDitH cat3_fast ===
+  [ref]
+  [neon]
+  [arm]
+
+=== SDitH cat5_fast ===
+  [ref]
+  [neon]
+  [arm]
+
+=== MQOM cat3 ===

@@ -1,0 +1,47 @@
+key_bits,impl,direction,metric,value
+128,T-table ASM,encrypt,cycles,3175
+192,T-table ASM,encrypt,cycles,3172
+256,T-table ASM,encrypt,cycles,3174
+128,T-table C,encrypt,cycles,3785
+192,T-table C,encrypt,cycles,3785
+256,T-table C,encrypt,cycles,3785
+128,Bitslice ASM,encrypt,cycles,4962
+192,Bitslice ASM,encrypt,cycles,4962
+256,Bitslice ASM,encrypt,cycles,4962
+128,Fixslice ASM,encrypt,cycles,5481
+192,Fixslice ASM,encrypt,cycles,5481
+256,Fixslice ASM,encrypt,cycles,5481
+128,Native C,encrypt,cycles,12373
+192,Native C,encrypt,cycles,12374
+256,Native C,encrypt,cycles,12374
+128,Bitslice ASM,decrypt,cycles,6060
+192,Bitslice ASM,decrypt,cycles,6060
+256,Bitslice ASM,decrypt,cycles,6060
+128,T-table ASM,keyschedule,cycles,3101
+192,T-table ASM,keyschedule,cycles,2962
+256,T-table ASM,keyschedule,cycles,3525
+128,T-table C,keyschedule,cycles,3102
+192,T-table C,keyschedule,cycles,2967
+256,T-table C,keyschedule,cycles,3525
+128,Native C,keyschedule,cycles,3102
+192,Native C,keyschedule,cycles,2967
+256,Native C,keyschedule,cycles,3525
+128,Bitslice ASM,keyschedule_enc,cycles,5726
+192,Bitslice ASM,keyschedule_enc,cycles,5590
+256,Bitslice ASM,keyschedule_enc,cycles,5931
+128,Bitslice ASM,keyschedule_dec,cycles,20877
+192,Bitslice ASM,keyschedule_dec,cycles,20721
+256,Bitslice ASM,keyschedule_dec,cycles,20915
+128,Fixslice ASM,keyschedule,cycles,10229
+192,Fixslice ASM,keyschedule,cycles,10089
+256,Fixslice ASM,keyschedule,cycles,10299
+T-table ASM,ASM encrypt,code_size,bytes,1092
+T-table ASM,C impl (KS+tables),code_size,bytes,1796
+T-table ASM,Total,code_size,bytes,2888
+Bitslice ASM,ASM encrypt,code_size,bytes,2220
+Bitslice ASM,ASM decrypt,code_size,bytes,2524
+Bitslice ASM,ELF total,code_size,bytes,8460
+Fixslice ASM,ASM encrypt,code_size,bytes,7020
+Fixslice ASM,ELF total,code_size,bytes,10384
+Native C,rijndael256_native.o,code_size,bytes,6048
+T-table C,rijndael256_ttable.o,code_size,bytes,16416

@@ -1,0 +1,25 @@
+Rijndael-256 Cortex-M4 Benchmark — STM32F407
+=============================================
+
+Date:       2026-03-17
+Device:     STM32F407VG (ARM Cortex-M4, 168 MHz)
+Memory:     192 KiB SRAM, 1 MiB Flash
+Toolchain:  arm-none-eabi-gcc 13.2.1
+Flags:      -O3
+Method:     DWT cycle counter, average of 16 runs per measurement
+
+Benchmark config:
+  Block size:   32 bytes (256 bits)
+  Metric:       CPU cycles (DWT CYCCNT)
+  Averaging:    16 runs per measurement
+
+Note: Nr = 14 for all key sizes (Nr = max(Nk, Nb) + 6, Nb = 8).
+Encrypt cycles are identical across 128/192/256-bit keys.
+Only key schedule cost varies by key size.
+
+Implementations:
+  - T-table ASM:   hand-written Thumb-2 assembly, not constant-time
+  - T-table C:     C lookup table, not constant-time
+  - Bitslice ASM:  hand-written Thumb-2 assembly, constant-time
+  - Fixslice ASM:  hand-written Thumb-2 assembly, constant-time
+  - Native C:      reference C implementation, not constant-time

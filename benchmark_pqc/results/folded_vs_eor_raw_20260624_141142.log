@@ -1,0 +1,1897 @@
+============================================================
+PQC folded-vs-EOR benchmark  Wed Jun 24 14:11:42 KST 2026
+host    : Apple M2
+macos   : 26.2  build 25C56
+clang   : Apple clang version 17.0.0 (clang-1700.6.3.2)
+iters   : fast=300 sdith=60 repeats=3
+============================================================
+>>> MQOM cat3
+[+] Compiling libhash
+cd sha3 && PLATFORM=opt64 make
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+ar rcs libhash.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_ref.o rijndael/rijndael_ref.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_table.o rijndael/rijndael_table.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_aes_ni.o rijndael/rijndael_aes_ni.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_arm.o rijndael/rijndael_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_keyschedule.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_folded_arm.o rijndael/rijndael256_folded_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_arm.o rijndael/rijndael256_arm.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_neon.o rijndael/rijndael256_neon.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o xof.o xof.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o prg.o prg.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o ggm_tree.o ggm_tree.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o expand_mq.o expand_mq.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o keygen.o keygen.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o blc.o blc.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o piop.o piop.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o sign.o sign.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF benchmark/bench.c benchmark/timing.c rijndael/rijndael_ref.o rijndael/rijndael_table.o rijndael/rijndael_aes_ni.o rijndael/rijndael_arm.o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_folded_arm.o  rijndael/rijndael256_arm.o rijndael/rijndael256_neon.o ./xof.o ./prg.o ./ggm_tree.o ./expand_mq.o ./keygen.o ./blc.o ./piop.o ./sign.o   sha3/libhash.a -lm -o bench
+---- MQOM 3 arm_eor run 1 : ./bench 300 ----
+SCHEME MQOM2-L3-gf256-fast-r3
+PROFILE keygen avg_total_cycles=56389 avg_rijndael_cycles=45717 ratio=81.074323 avg_calls=10224
+PROFILE sign avg_total_cycles=583572 avg_rijndael_cycles=247700 ratio=42.445491 avg_calls=64070
+PROFILE verify avg_total_cycles=443584 avg_rijndael_cycles=246320 ratio=55.529505 avg_calls=64008
+---- MQOM 3 arm_eor run 2 : ./bench 300 ----
+SCHEME MQOM2-L3-gf256-fast-r3
+PROFILE keygen avg_total_cycles=54340 avg_rijndael_cycles=44013 ratio=80.995583 avg_calls=10224
+PROFILE sign avg_total_cycles=583157 avg_rijndael_cycles=247485 ratio=42.438829 avg_calls=64070
+PROFILE verify avg_total_cycles=443979 avg_rijndael_cycles=246613 ratio=55.546096 avg_calls=64008
+---- MQOM 3 arm_eor run 3 : ./bench 300 ----
+SCHEME MQOM2-L3-gf256-fast-r3
+PROFILE keygen avg_total_cycles=55180 avg_rijndael_cycles=44708 ratio=81.022109 avg_calls=10224
+PROFILE sign avg_total_cycles=582924 avg_rijndael_cycles=247370 ratio=42.436064 avg_calls=64070
+PROFILE verify avg_total_cycles=444079 avg_rijndael_cycles=246594 ratio=55.529309 avg_calls=64008
+  MQOM 3 arm_eor keygen : total=55180 rij=44708 (81.074323%)
+  MQOM 3 arm_eor sign : total=583157 rij=247485 (42.445491%)
+  MQOM 3 arm_eor verify : total=443979 rij=246594 (55.529505%)
+[+] Compiling libhash
+cd sha3 && PLATFORM=opt64 make
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+ar rcs libhash.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_ref.o rijndael/rijndael_ref.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_table.o rijndael/rijndael_table.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_aes_ni.o rijndael/rijndael_aes_ni.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_arm.o rijndael/rijndael_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_keyschedule.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_folded_arm.o rijndael/rijndael256_folded_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_arm.o rijndael/rijndael256_arm.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_neon.o rijndael/rijndael256_neon.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o xof.o xof.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o prg.o prg.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o ggm_tree.o ggm_tree.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o expand_mq.o expand_mq.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o keygen.o keygen.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o blc.o blc.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o piop.o piop.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o sign.o sign.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF benchmark/bench.c benchmark/timing.c rijndael/rijndael_ref.o rijndael/rijndael_table.o rijndael/rijndael_aes_ni.o rijndael/rijndael_arm.o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_folded_arm.o  rijndael/rijndael256_arm.o rijndael/rijndael256_neon.o ./xof.o ./prg.o ./ggm_tree.o ./expand_mq.o ./keygen.o ./blc.o ./piop.o ./sign.o   sha3/libhash.a -lm -o bench
+---- MQOM 3 arm_folded run 1 : ./bench 300 ----
+SCHEME MQOM2-L3-gf256-fast-r3
+PROFILE keygen avg_total_cycles=66735 avg_rijndael_cycles=56204 ratio=84.219675 avg_calls=10224
+PROFILE sign avg_total_cycles=635448 avg_rijndael_cycles=299630 ratio=47.152560 avg_calls=64070
+PROFILE verify avg_total_cycles=495196 avg_rijndael_cycles=298247 ratio=60.228071 avg_calls=64008
+---- MQOM 3 arm_folded run 2 : ./bench 300 ----
+SCHEME MQOM2-L3-gf256-fast-r3
+PROFILE keygen avg_total_cycles=65530 avg_rijndael_cycles=55166 ratio=84.184343 avg_calls=10224
+PROFILE sign avg_total_cycles=636303 avg_rijndael_cycles=300267 ratio=47.189311 avg_calls=64070
+PROFILE verify avg_total_cycles=496020 avg_rijndael_cycles=298707 ratio=60.220757 avg_calls=64008
+---- MQOM 3 arm_folded run 3 : ./bench 300 ----
+SCHEME MQOM2-L3-gf256-fast-r3
+PROFILE keygen avg_total_cycles=65175 avg_rijndael_cycles=54862 ratio=84.176448 avg_calls=10224
+PROFILE sign avg_total_cycles=635292 avg_rijndael_cycles=299683 ratio=47.172481 avg_calls=64070
+PROFILE verify avg_total_cycles=495635 avg_rijndael_cycles=298380 ratio=60.201560 avg_calls=64008
+  MQOM 3 arm_folded keygen : total=65530 rij=55166 (84.219675%)
+  MQOM 3 arm_folded sign : total=635448 rij=299683 (47.152560%)
+  MQOM 3 arm_folded verify : total=495635 rij=298380 (60.228071%)
+>>> MQOM cat5
+[+] Compiling libhash
+cd sha3 && PLATFORM=opt64 make
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+ar rcs libhash.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_ref.o rijndael/rijndael_ref.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_table.o rijndael/rijndael_table.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_aes_ni.o rijndael/rijndael_aes_ni.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael_arm.o rijndael/rijndael_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_keyschedule.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_folded_arm.o rijndael/rijndael256_folded_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_arm.o rijndael/rijndael256_arm.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o rijndael/rijndael256_neon.o rijndael/rijndael256_neon.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o xof.o xof.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o prg.o prg.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o ggm_tree.o ggm_tree.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o expand_mq.o expand_mq.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o keygen.o keygen.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o blc.o blc.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o piop.o piop.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF -c -o sign.o sign.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DFIELDS_REF benchmark/bench.c benchmark/timing.c rijndael/rijndael_ref.o rijndael/rijndael_table.o rijndael/rijndael_aes_ni.o rijndael/rijndael_arm.o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_folded_arm.o  rijndael/rijndael256_arm.o rijndael/rijndael256_neon.o ./xof.o ./prg.o ./ggm_tree.o ./expand_mq.o ./keygen.o ./blc.o ./piop.o ./sign.o   sha3/libhash.a -lm -o bench
+---- MQOM 5 arm_eor run 1 : ./bench 300 ----
+SCHEME MQOM2-L5-gf256-fast-r3
+PROFILE keygen avg_total_cycles=95611 avg_rijndael_cycles=78344 ratio=81.940363 avg_calls=17952
+PROFILE sign avg_total_cycles=1103721 avg_rijndael_cycles=349881 ratio=31.700131 avg_calls=89745
+PROFILE verify avg_total_cycles=761275 avg_rijndael_cycles=348295 ratio=45.751535 avg_calls=89664
+---- MQOM 5 arm_eor run 2 : ./bench 300 ----
+SCHEME MQOM2-L5-gf256-fast-r3
+PROFILE keygen avg_total_cycles=94514 avg_rijndael_cycles=77456 ratio=81.951880 avg_calls=17952
+PROFILE sign avg_total_cycles=1100997 avg_rijndael_cycles=348951 ratio=31.694092 avg_calls=89745
+PROFILE verify avg_total_cycles=760387 avg_rijndael_cycles=347919 ratio=45.755517 avg_calls=89664
+---- MQOM 5 arm_eor run 3 : ./bench 300 ----
+SCHEME MQOM2-L5-gf256-fast-r3
+PROFILE keygen avg_total_cycles=94353 avg_rijndael_cycles=77313 ratio=81.940161 avg_calls=17952
+PROFILE sign avg_total_cycles=1102562 avg_rijndael_cycles=349409 ratio=31.690644 avg_calls=89745
+PROFILE verify avg_total_cycles=761799 avg_rijndael_cycles=348464 ratio=45.742250 avg_calls=89664
+  MQOM 5 arm_eor keygen : total=94514 rij=77456 (81.940363%)
+  MQOM 5 arm_eor sign : total=1102562 rij=349409 (31.700131%)
+  MQOM 5 arm_eor verify : total=761275 rij=348295 (45.751535%)
+[+] Compiling libhash
+cd sha3 && PLATFORM=opt64 make
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3  -Wall -Wextra -Wpedantic -Wno-unused-function -std=gnu99  -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib  -DNO_MISALIGNED_ACCESSES -c -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+ar rcs libhash.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_ref.o rijndael/rijndael_ref.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_table.o rijndael/rijndael_table.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_aes_ni.o rijndael/rijndael_aes_ni.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael_arm.o rijndael/rijndael_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_keyschedule.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_folded_arm.o rijndael/rijndael256_folded_arm.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_arm.o rijndael/rijndael256_arm.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o rijndael/rijndael256_neon.o rijndael/rijndael256_neon.S
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o xof.o xof.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o prg.o prg.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o ggm_tree.o ggm_tree.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o expand_mq.o expand_mq.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o keygen.o keygen.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o blc.o blc.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o piop.o piop.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF -c -o sign.o sign.c
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+cc -O3 -Wall -Wextra -DNDEBUG  -Isha3  -Isha3/opt64  -Irijndael  -Ifields  -I. -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -DRIJNDAEL_ARM_CRYPTO -DRIJNDAEL_ARM_FOLDED -DFIELDS_REF benchmark/bench.c benchmark/timing.c rijndael/rijndael_ref.o rijndael/rijndael_table.o rijndael/rijndael_aes_ni.o rijndael/rijndael_arm.o rijndael/rijndael256_keyschedule.o rijndael/rijndael256_folded_arm.o  rijndael/rijndael256_arm.o rijndael/rijndael256_neon.o ./xof.o ./prg.o ./ggm_tree.o ./expand_mq.o ./keygen.o ./blc.o ./piop.o ./sign.o   sha3/libhash.a -lm -o bench
+---- MQOM 5 arm_folded run 1 : ./bench 300 ----
+SCHEME MQOM2-L5-gf256-fast-r3
+PROFILE keygen avg_total_cycles=114778 avg_rijndael_cycles=97531 ratio=84.973601 avg_calls=17952
+PROFILE sign avg_total_cycles=1178234 avg_rijndael_cycles=423932 ratio=35.980289 avg_calls=89745
+PROFILE verify avg_total_cycles=834655 avg_rijndael_cycles=420989 ratio=50.438684 avg_calls=89664
+---- MQOM 5 arm_folded run 2 : ./bench 300 ----
+SCHEME MQOM2-L5-gf256-fast-r3
+PROFILE keygen avg_total_cycles=113435 avg_rijndael_cycles=96383 ratio=84.967603 avg_calls=17952
+PROFILE sign avg_total_cycles=1178032 avg_rijndael_cycles=423363 ratio=35.938158 avg_calls=89745
+PROFILE verify avg_total_cycles=836570 avg_rijndael_cycles=421622 ratio=50.398891 avg_calls=89664
+---- MQOM 5 arm_folded run 3 : ./bench 300 ----
+SCHEME MQOM2-L5-gf256-fast-r3
+PROFILE keygen avg_total_cycles=113486 avg_rijndael_cycles=96421 ratio=84.962903 avg_calls=17952
+PROFILE sign avg_total_cycles=1178488 avg_rijndael_cycles=423475 ratio=35.933756 avg_calls=89745
+PROFILE verify avg_total_cycles=835977 avg_rijndael_cycles=421860 ratio=50.463111 avg_calls=89664
+  MQOM 5 arm_folded keygen : total=113486 rij=96421 (84.973601%)
+  MQOM 5 arm_folded sign : total=1178234 rij=423475 (35.980289%)
+  MQOM 5 arm_folded verify : total=835977 rij=421622 (50.438684%)
+>>> Mirath 3a
+cc -c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -o rng.o rng.c
+rng.c:75:19: warning: comparison of integers of different signs: 'unsigned long' and 'int' [-Wsign-compare]
+   75 |         if ( xlen <= (16-ctx->buffer_pos) ) { // buffer has what we need
+      |              ~~~~ ^   ~~~~~~~~~~~~~~~~~~
+rng.c:123:9: warning: variable 'ciphertext_len' set but not used [-Wunused-but-set-variable]
+  123 |     int ciphertext_len;
+      |         ^
+rng.c:142:22: warning: unused parameter 'security_strength' [-Wunused-parameter]
+  142 |                  int security_strength)
+      |                      ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakHash.o common/KeccakHash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakP-1600-opt64.o common/KeccakP-1600-opt64.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/fips202.o common/fips202.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+common/fips202.c:775:2: warning: no newline at end of file [-Wnewline-eof]
+  775 | }
+      |  ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/hash.o common/hash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/prng.o common/prng.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o main.o main.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_ggm_tree.o mirath_ggm_tree.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_ggm_tree.c:8:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_keygen.o mirath_keygen.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_matrix_ff.o mirath_matrix_ff.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_parsing.o mirath_parsing.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_parsing.c:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_parsing.c:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_sign.o mirath_sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_tcith.o mirath_tcith.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_tcith.c:8:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_tcith.c:10:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_tcith.c:11:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_verify.o mirath_verify.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o sign.o sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -c -o common/rijndael/rijndael256_arm.o common/rijndael/rijndael256_arm.S -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/rijndael/rijndael256_keyschedule.o common/rijndael/rijndael256_keyschedule.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -o mirath_3a_f rng.o common/KeccakHash.o common/KeccakP-1600-opt64.o common/fips202.o common/hash.o common/prng.o main.o mirath_ggm_tree.o mirath_keygen.o mirath_matrix_ff.o mirath_parsing.o mirath_sign.o mirath_tcith.o mirath_verify.o sign.o common/rijndael/rijndael256_arm.o common/rijndael/rijndael256_keyschedule.o -lcrypto -L/opt/homebrew/opt/openssl@3/lib
+---- Mirath 3 arm_eor run 1 : ./mirath_3a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=3052 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=835070 avg_rijndael_cycles=97400 ratio=11.663693 avg_calls=13311
+PROFILE verify avg_total_cycles=534313 avg_rijndael_cycles=111979 ratio=20.957566 avg_calls=13080
+---- Mirath 3 arm_eor run 2 : ./mirath_3a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=1507 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=835149 avg_rijndael_cycles=97415 ratio=11.664386 avg_calls=13311
+PROFILE verify avg_total_cycles=534956 avg_rijndael_cycles=112067 ratio=20.948826 avg_calls=13080
+---- Mirath 3 arm_eor run 3 : ./mirath_3a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=1499 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=834156 avg_rijndael_cycles=97307 ratio=11.665324 avg_calls=13311
+PROFILE verify avg_total_cycles=534644 avg_rijndael_cycles=111930 ratio=20.935426 avg_calls=13080
+  Mirath 3 arm_eor keygen : total=1507 rij=0 (0.000000%)
+  Mirath 3 arm_eor sign : total=835070 rij=97400 (11.663693%)
+  Mirath 3 arm_eor verify : total=534644 rij=111979 (20.957566%)
+cc -c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -o rng.o rng.c
+rng.c:75:19: warning: comparison of integers of different signs: 'unsigned long' and 'int' [-Wsign-compare]
+   75 |         if ( xlen <= (16-ctx->buffer_pos) ) { // buffer has what we need
+      |              ~~~~ ^   ~~~~~~~~~~~~~~~~~~
+rng.c:123:9: warning: variable 'ciphertext_len' set but not used [-Wunused-but-set-variable]
+  123 |     int ciphertext_len;
+      |         ^
+rng.c:142:22: warning: unused parameter 'security_strength' [-Wunused-parameter]
+  142 |                  int security_strength)
+      |                      ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakHash.o common/KeccakHash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakP-1600-opt64.o common/KeccakP-1600-opt64.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/fips202.o common/fips202.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+common/fips202.c:775:2: warning: no newline at end of file [-Wnewline-eof]
+  775 | }
+      |  ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/hash.o common/hash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/prng.o common/prng.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o main.o main.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_ggm_tree.o mirath_ggm_tree.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_ggm_tree.c:8:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_keygen.o mirath_keygen.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_matrix_ff.o mirath_matrix_ff.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_parsing.o mirath_parsing.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_parsing.c:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_parsing.c:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_sign.o mirath_sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_tcith.o mirath_tcith.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_tcith.c:8:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_tcith.c:10:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_tcith.c:11:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_verify.o mirath_verify.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_192a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o sign.o sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/rijndael/rijndael256_folded_arm.o common/rijndael/rijndael256_folded_arm.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/rijndael/rijndael256_keyschedule.o common/rijndael/rijndael256_keyschedule.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -o mirath_3a_f rng.o common/KeccakHash.o common/KeccakP-1600-opt64.o common/fips202.o common/hash.o common/prng.o main.o mirath_ggm_tree.o mirath_keygen.o mirath_matrix_ff.o mirath_parsing.o mirath_sign.o mirath_tcith.o mirath_verify.o sign.o common/rijndael/rijndael256_folded_arm.o common/rijndael/rijndael256_keyschedule.o -lcrypto -L/opt/homebrew/opt/openssl@3/lib
+---- Mirath 3 arm_folded run 1 : ./mirath_3a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=3464 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=850663 avg_rijndael_cycles=111435 ratio=13.099782 avg_calls=13311
+PROFILE verify avg_total_cycles=553160 avg_rijndael_cycles=129410 ratio=23.394678 avg_calls=13080
+---- Mirath 3 arm_folded run 2 : ./mirath_3a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=1499 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=851197 avg_rijndael_cycles=111516 ratio=13.101080 avg_calls=13311
+PROFILE verify avg_total_cycles=552489 avg_rijndael_cycles=129261 ratio=23.396122 avg_calls=13080
+---- Mirath 3 arm_folded run 3 : ./mirath_3a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=1500 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=850571 avg_rijndael_cycles=111460 ratio=13.104138 avg_calls=13311
+PROFILE verify avg_total_cycles=553653 avg_rijndael_cycles=129502 ratio=23.390463 avg_calls=13080
+  Mirath 3 arm_folded keygen : total=1500 rij=0 (0.000000%)
+  Mirath 3 arm_folded sign : total=850663 rij=111460 (13.099782%)
+  Mirath 3 arm_folded verify : total=553160 rij=129410 (23.394678%)
+>>> Mirath 5a
+cc -c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -o rng.o rng.c
+rng.c:75:19: warning: comparison of integers of different signs: 'unsigned long' and 'int' [-Wsign-compare]
+   75 |         if ( xlen <= (16-ctx->buffer_pos) ) { // buffer has what we need
+      |              ~~~~ ^   ~~~~~~~~~~~~~~~~~~
+rng.c:123:9: warning: variable 'ciphertext_len' set but not used [-Wunused-but-set-variable]
+  123 |     int ciphertext_len;
+      |         ^
+rng.c:142:22: warning: unused parameter 'security_strength' [-Wunused-parameter]
+  142 |                  int security_strength)
+      |                      ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakHash.o common/KeccakHash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakP-1600-opt64.o common/KeccakP-1600-opt64.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/fips202.o common/fips202.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+common/fips202.c:775:2: warning: no newline at end of file [-Wnewline-eof]
+  775 | }
+      |  ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/hash.o common/hash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/prng.o common/prng.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o main.o main.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_ggm_tree.o mirath_ggm_tree.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_ggm_tree.c:8:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_keygen.o mirath_keygen.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_matrix_ff.o mirath_matrix_ff.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_parsing.o mirath_parsing.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_parsing.c:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_parsing.c:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_sign.o mirath_sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_tcith.o mirath_tcith.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_tcith.c:8:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_tcith.c:10:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_tcith.c:11:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_verify.o mirath_verify.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o sign.o sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -c -o common/rijndael/rijndael256_arm.o common/rijndael/rijndael256_arm.S -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/rijndael/rijndael256_keyschedule.o common/rijndael/rijndael256_keyschedule.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -o mirath_5a_f rng.o common/KeccakHash.o common/KeccakP-1600-opt64.o common/fips202.o common/hash.o common/prng.o main.o mirath_ggm_tree.o mirath_keygen.o mirath_matrix_ff.o mirath_parsing.o mirath_sign.o mirath_tcith.o mirath_verify.o sign.o common/rijndael/rijndael256_arm.o common/rijndael/rijndael256_keyschedule.o -lcrypto -L/opt/homebrew/opt/openssl@3/lib
+---- Mirath 5 arm_eor run 1 : ./mirath_5a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=5064 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=2042284 avg_rijndael_cycles=128122 ratio=6.273466 avg_calls=18431
+PROFILE verify avg_total_cycles=1157270 avg_rijndael_cycles=149321 ratio=12.902866 avg_calls=18129
+---- Mirath 5 arm_eor run 2 : ./mirath_5a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=2637 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=2047847 avg_rijndael_cycles=128409 ratio=6.270439 avg_calls=18431
+PROFILE verify avg_total_cycles=1153448 avg_rijndael_cycles=147909 ratio=12.823205 avg_calls=18129
+---- Mirath 5 arm_eor run 3 : ./mirath_5a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=2636 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=2040541 avg_rijndael_cycles=128079 ratio=6.276718 avg_calls=18431
+PROFILE verify avg_total_cycles=1153912 avg_rijndael_cycles=148281 ratio=12.850287 avg_calls=18129
+  Mirath 5 arm_eor keygen : total=2637 rij=0 (0.000000%)
+  Mirath 5 arm_eor sign : total=2042284 rij=128122 (6.273466%)
+  Mirath 5 arm_eor verify : total=1153912 rij=148281 (12.902866%)
+cc -c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -o rng.o rng.c
+rng.c:75:19: warning: comparison of integers of different signs: 'unsigned long' and 'int' [-Wsign-compare]
+   75 |         if ( xlen <= (16-ctx->buffer_pos) ) { // buffer has what we need
+      |              ~~~~ ^   ~~~~~~~~~~~~~~~~~~
+rng.c:123:9: warning: variable 'ciphertext_len' set but not used [-Wunused-but-set-variable]
+  123 |     int ciphertext_len;
+      |         ^
+rng.c:142:22: warning: unused parameter 'security_strength' [-Wunused-parameter]
+  142 |                  int security_strength)
+      |                      ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakHash.o common/KeccakHash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/KeccakP-1600-opt64.o common/KeccakP-1600-opt64.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/fips202.o common/fips202.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+common/fips202.c:775:2: warning: no newline at end of file [-Wnewline-eof]
+  775 | }
+      |  ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/hash.o common/hash.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/prng.o common/prng.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o main.o main.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_ggm_tree.o mirath_ggm_tree.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_ggm_tree.c:8:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+1 warning generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_keygen.o mirath_keygen.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_keygen.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_keygen.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_matrix_ff.o mirath_matrix_ff.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_matrix_ff.c:6:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_matrix_ff.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_parsing.o mirath_parsing.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_parsing.c:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_parsing.c:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_parsing.c:5:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_sign.o mirath_sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_sign.c:8:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_sign.c:7:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_tcith.o mirath_tcith.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_tcith.c:8:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_tcith.c:10:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_tcith.c:11:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+3 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o mirath_verify.o mirath_verify.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+./arith/mirath_arith.h:20:25: warning: no newline at end of file [-Wnewline-eof]
+   20 | #endif // MIRATH_ARITH_H
+      |                         ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+In file included from ./mirath_tcith.h:7:
+./mirath_ggm_tree.h:43:27: warning: no newline at end of file [-Wnewline-eof]
+   43 | #endif //MIRATH_GGM_TREE_H
+      |                           ^
+In file included from mirath_verify.c:7:
+In file included from ./mirath_parsing.h:6:
+./mirath_tcith.h:14:55: warning: zero size arrays are an extension [-Wzero-length-array]
+   14 | typedef mirath_tcith_commit_t mirath_tcith_commit_2_t[MIRATH_PARAM_TAU_2][MIRATH_PARAM_N_2];
+      |                                                       ^~~~~~~~~~~~~~~~~~
+./parameters/mirath_param_256a.h:30:28: note: expanded from macro 'MIRATH_PARAM_TAU_2'
+   30 | #define MIRATH_PARAM_TAU_2 0                    /**< Parameter tau_2 of the scheme (number of iterations concerning N2) */
+      |                            ^
+In file included from mirath_verify.c:6:
+In file included from ./mirath_matrix_ff.h:6:
+In file included from ./arith/mirath_arith.h:15:
+./arith/q_16/matrix_ff_mu.h:112:13: warning: unused function 'mirath_matrix_ff_mu_add_multiple_2' [-Wunused-function]
+  112 | static void mirath_matrix_ff_mu_add_multiple_2(ff_mu_t *matrix1, ff_mu_t scalar, const ff_mu_t *matrix2,
+      |             ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+4 warnings generated.
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o sign.o sign.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/rijndael/rijndael256_folded_arm.o common/rijndael/rijndael256_folded_arm.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -D_SHA3_ -I./parameters -I./arith/q_16/mu_fast -I./arith/q_16 -I./arith -I./common/rijndael -I./common -I. -I/opt/homebrew/opt/openssl@3/include -c -o common/rijndael/rijndael256_keyschedule.o common/rijndael/rijndael256_keyschedule.c -std=c11 -Wall -Wextra -pedantic -O2 -DUSE_ARM_FOLDED -DUSE_ARM_CRYPTO -march=armv8-a+crypto
+cc -o mirath_5a_f rng.o common/KeccakHash.o common/KeccakP-1600-opt64.o common/fips202.o common/hash.o common/prng.o main.o mirath_ggm_tree.o mirath_keygen.o mirath_matrix_ff.o mirath_parsing.o mirath_sign.o mirath_tcith.o mirath_verify.o sign.o common/rijndael/rijndael256_folded_arm.o common/rijndael/rijndael256_keyschedule.o -lcrypto -L/opt/homebrew/opt/openssl@3/lib
+---- Mirath 5 arm_folded run 1 : ./mirath_5a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=5220 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=2027540 avg_rijndael_cycles=138004 ratio=6.806475 avg_calls=18431
+PROFILE verify avg_total_cycles=1146712 avg_rijndael_cycles=144350 ratio=12.588165 avg_calls=18129
+---- Mirath 5 arm_folded run 2 : ./mirath_5a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=2638 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=2021842 avg_rijndael_cycles=138072 ratio=6.829020 avg_calls=18431
+PROFILE verify avg_total_cycles=1146845 avg_rijndael_cycles=144517 ratio=12.601267 avg_calls=18129
+---- Mirath 5 arm_folded run 3 : ./mirath_5a_f 300 ----
+SCHEME Mirath
+PROFILE keygen avg_total_cycles=2648 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=2027172 avg_rijndael_cycles=138296 ratio=6.822115 avg_calls=18431
+PROFILE verify avg_total_cycles=1146323 avg_rijndael_cycles=144421 ratio=12.598631 avg_calls=18129
+  Mirath 5 arm_folded keygen : total=2648 rij=0 (0.000000%)
+  Mirath 5 arm_folded sign : total=2027172 rij=138072 (6.806475%)
+  Mirath 5 arm_folded verify : total=1146712 rij=144421 (12.588165%)
+>>> RYDE 3f
+-e 
+### Creating build folders
+
+mkdir -p bin/build
+-e 
+### Compiling rbc_61_elt.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_elt.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_elt.o
+-e 
+### Compiling rbc_61_vec.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_vec.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_vec.o
+-e 
+### Compiling rbc_61_vspace.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_vspace.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_vspace.o
+-e 
+### Compiling rbc_61_mat.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_mat.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_mat.o
+-e 
+### Compiling rbc_61_mat_fq.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_mat_fq.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_mat_fq.o
+-e 
+### Compiling keypair.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/keypair.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/keypair.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling signature.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/signature.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/signature.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling verification.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/verification.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/verification.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling parsing.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/parsing.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/parsing.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling ggm_tree-arm.o (ARM optimized)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -c src/ggm_tree.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/ggm_tree-arm.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling sign.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/sign.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/sign.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling tcith-arm.o (ARM optimized)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -c src/tcith.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/tcith-arm.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling rijndael256_keyschedule.o (Rijndael-256 key schedule)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_keyschedule.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/rijndael256_keyschedule.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Assembling rijndael256_arm_asm.o (ARM Crypto Extension)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_arm.S -o bin/build/rijndael256_arm_asm.o
+-e 
+### Assembling rijndael256_neon_asm.o (NEON TBL/TBX)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_neon.S -o bin/build/rijndael256_neon_asm.o
+-e 
+### Assembling rijndael256_neon_interleaved_asm.o (NEON interleaved)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_neon_interleaved.S -o bin/build/rijndael256_neon_interleaved_asm.o
+-e 
+### Compiling SimpleFIPS202.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/XKCP/SimpleFIPS202.c -I lib/XKCP -Ilib/XKCP -Ilib/XKCP/opt64 -Llib/XKCP -lshake -o bin/build/SimpleFIPS202.o
+clang: warning: -lshake: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-Llib/XKCP' [-Wunused-command-line-argument]
+-e 
+### Compiling randombytes.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/randombytes/randombytes.c -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/randombytes.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling XKCP
+
+make -C lib/XKCP
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+ar rcs libshake.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+-e 
+### Compiling RYDE-3F (benchmark) using ARM-optimized Rijndael
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM src/bench.c bin/build/rbc_61_elt.o bin/build/rbc_61_vec.o bin/build/rbc_61_vspace.o bin/build/rbc_61_mat.o bin/build/rbc_61_mat_fq.o bin/build/keypair.o bin/build/signature.o bin/build/verification.o bin/build/parsing.o bin/build/ggm_tree-arm.o bin/build/sign.o bin/build/tcith-arm.o bin/build/rijndael256_keyschedule.o bin/build/rijndael256_arm_asm.o bin/build/rijndael256_neon_asm.o bin/build/rijndael256_neon_interleaved_asm.o bin/build/SimpleFIPS202.o bin/build/randombytes.o -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -Llib/XKCP -lshake -o bin/ryde3f-arm-bench
+---- RYDE 3 arm_eor run 1 : ./bin/ryde3f-arm-bench 300 ----
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=4872 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=550098 avg_rijndael_cycles=123753 ratio=22.496537 avg_calls=19993
+PROFILE verify avg_total_cycles=482755 avg_rijndael_cycles=122399 ratio=25.354269 avg_calls=19707
+---- RYDE 3 arm_eor run 2 : ./bin/ryde3f-arm-bench 300 ----
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=2488 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=550212 avg_rijndael_cycles=123640 ratio=22.471338 avg_calls=19993
+PROFILE verify avg_total_cycles=482773 avg_rijndael_cycles=122343 ratio=25.341724 avg_calls=19707
+---- RYDE 3 arm_eor run 3 : ./bin/ryde3f-arm-bench 300 ----
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=2479 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=550316 avg_rijndael_cycles=123854 ratio=22.505978 avg_calls=19993
+PROFILE verify avg_total_cycles=484445 avg_rijndael_cycles=122841 ratio=25.357058 avg_calls=19707
+  RYDE 3 arm_eor keygen : total=2488 rij=0 (0.000000%)
+  RYDE 3 arm_eor sign : total=550212 rij=123753 (22.496537%)
+  RYDE 3 arm_eor verify : total=482773 rij=122399 (25.354269%)
+-e 
+### Creating build folders
+
+mkdir -p bin/build
+-e 
+### Compiling rbc_61_elt.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_elt.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_elt.o
+-e 
+### Compiling rbc_61_vec.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_vec.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_vec.o
+-e 
+### Compiling rbc_61_vspace.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_vspace.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_vspace.o
+-e 
+### Compiling rbc_61_mat.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_mat.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_mat.o
+-e 
+### Compiling rbc_61_mat_fq.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-61/rbc_61_mat_fq.c -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_61_mat_fq.o
+-e 
+### Compiling keypair.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/keypair.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/keypair.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling signature.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/signature.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/signature.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling verification.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/verification.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/verification.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling parsing.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/parsing.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/parsing.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling ggm_tree-folded.o (ARM folded)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -DUSE_ARM_FOLDED -c src/ggm_tree.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/ggm_tree-folded.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling sign.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/sign.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/sign.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling tcith-folded.o (ARM folded)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -DUSE_ARM_FOLDED -c src/tcith.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/tcith-folded.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling rijndael256_keyschedule.o (Rijndael-256 key schedule)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_keyschedule.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/rijndael256_keyschedule.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling rijndael256_folded_arm.o (Rijndael-256 folded encrypt)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_folded_arm.c -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/rijndael256_folded_arm.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling SimpleFIPS202.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/XKCP/SimpleFIPS202.c -I lib/XKCP -Ilib/XKCP -Ilib/XKCP/opt64 -Llib/XKCP -lshake -o bin/build/SimpleFIPS202.o
+clang: warning: -lshake: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-Llib/XKCP' [-Wunused-command-line-argument]
+-e 
+### Compiling randombytes.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/randombytes/randombytes.c -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/randombytes.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling XKCP
+
+make -C lib/XKCP
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+ar rcs libshake.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+-e 
+### Compiling RYDE-3F (benchmark) using folded ARM Rijndael
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -DUSE_ARM_FOLDED src/bench.c bin/build/rbc_61_elt.o bin/build/rbc_61_vec.o bin/build/rbc_61_vspace.o bin/build/rbc_61_mat.o bin/build/rbc_61_mat_fq.o bin/build/keypair.o bin/build/signature.o bin/build/verification.o bin/build/parsing.o bin/build/ggm_tree-folded.o bin/build/sign.o bin/build/tcith-folded.o bin/build/rijndael256_keyschedule.o bin/build/rijndael256_folded_arm.o bin/build/SimpleFIPS202.o bin/build/randombytes.o -I src -I src/rbc-61 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -Llib/XKCP -lshake -o bin/ryde3f-arm-folded-bench
+---- RYDE 3 arm_folded run 1 : ./bin/ryde3f-arm-folded-bench 300 ----
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=4886 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=570789 avg_rijndael_cycles=142126 ratio=24.899919 avg_calls=19993
+PROFILE verify avg_total_cycles=500535 avg_rijndael_cycles=139916 ratio=27.953290 avg_calls=19707
+---- RYDE 3 arm_folded run 2 : ./bin/ryde3f-arm-folded-bench 300 ----
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=2499 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=572943 avg_rijndael_cycles=142681 ratio=24.903175 avg_calls=19993
+PROFILE verify avg_total_cycles=499902 avg_rijndael_cycles=139790 ratio=27.963481 avg_calls=19707
+---- RYDE 3 arm_folded run 3 : ./bin/ryde3f-arm-folded-bench 300 ----
+SCHEME RYDE-3F
+PROFILE keygen avg_total_cycles=2486 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=571777 avg_rijndael_cycles=142424 ratio=24.909012 avg_calls=19993
+PROFILE verify avg_total_cycles=500904 avg_rijndael_cycles=139859 ratio=27.921318 avg_calls=19707
+  RYDE 3 arm_folded keygen : total=2499 rij=0 (0.000000%)
+  RYDE 3 arm_folded sign : total=571777 rij=142424 (24.899919%)
+  RYDE 3 arm_folded verify : total=500535 rij=139859 (27.953290%)
+>>> RYDE 5f
+-e 
+### Creating build folders
+
+mkdir -p bin/build
+-e 
+### Compiling rbc_67_elt.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_elt.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_elt.o
+-e 
+### Compiling rbc_67_vec.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_vec.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_vec.o
+-e 
+### Compiling rbc_67_vspace.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_vspace.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_vspace.o
+-e 
+### Compiling rbc_67_mat.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_mat.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_mat.o
+-e 
+### Compiling rbc_67_mat_fq.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_mat_fq.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_mat_fq.o
+-e 
+### Compiling keypair.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/keypair.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/keypair.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling signature.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/signature.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/signature.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling verification.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/verification.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/verification.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling parsing.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/parsing.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/parsing.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling ggm_tree-arm.o (ARM optimized)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -c src/ggm_tree.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/ggm_tree-arm.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling sign.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/sign.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/sign.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling tcith-arm.o (ARM optimized)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -c src/tcith.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/tcith-arm.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling rijndael256_keyschedule.o (Rijndael-256 key schedule)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_keyschedule.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/rijndael256_keyschedule.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Assembling rijndael256_arm_asm.o (ARM Crypto Extension)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_arm.S -o bin/build/rijndael256_arm_asm.o
+-e 
+### Assembling rijndael256_neon_asm.o (NEON TBL/TBX)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_neon.S -o bin/build/rijndael256_neon_asm.o
+-e 
+### Assembling rijndael256_neon_interleaved_asm.o (NEON interleaved)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_neon_interleaved.S -o bin/build/rijndael256_neon_interleaved_asm.o
+-e 
+### Compiling SimpleFIPS202.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/XKCP/SimpleFIPS202.c -I lib/XKCP -Ilib/XKCP -Ilib/XKCP/opt64 -Llib/XKCP -lshake -o bin/build/SimpleFIPS202.o
+clang: warning: -lshake: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-Llib/XKCP' [-Wunused-command-line-argument]
+-e 
+### Compiling randombytes.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/randombytes/randombytes.c -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/randombytes.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling XKCP
+
+make -C lib/XKCP
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+ar rcs libshake.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+-e 
+### Compiling RYDE-5F (benchmark) using ARM-optimized Rijndael
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM src/bench.c bin/build/rbc_67_elt.o bin/build/rbc_67_vec.o bin/build/rbc_67_vspace.o bin/build/rbc_67_mat.o bin/build/rbc_67_mat_fq.o bin/build/keypair.o bin/build/signature.o bin/build/verification.o bin/build/parsing.o bin/build/ggm_tree-arm.o bin/build/sign.o bin/build/tcith-arm.o bin/build/rijndael256_keyschedule.o bin/build/rijndael256_arm_asm.o bin/build/rijndael256_neon_asm.o bin/build/rijndael256_neon_interleaved_asm.o bin/build/SimpleFIPS202.o bin/build/randombytes.o -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -Llib/XKCP -lshake -o bin/ryde5f-arm-bench
+---- RYDE 5 arm_eor run 1 : ./bin/ryde5f-arm-bench 300 ----
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=7693 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1281279 avg_rijndael_cycles=164484 ratio=12.837485 avg_calls=27683
+PROFILE verify avg_total_cycles=1059686 avg_rijndael_cycles=161943 ratio=15.282168 avg_calls=27297
+---- RYDE 5 arm_eor run 2 : ./bin/ryde5f-arm-bench 300 ----
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=4903 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1292521 avg_rijndael_cycles=165727 ratio=12.821997 avg_calls=27683
+PROFILE verify avg_total_cycles=1058984 avg_rijndael_cycles=161821 ratio=15.280779 avg_calls=27297
+---- RYDE 5 arm_eor run 3 : ./bin/ryde5f-arm-bench 300 ----
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=4909 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1284106 avg_rijndael_cycles=164663 ratio=12.823163 avg_calls=27683
+PROFILE verify avg_total_cycles=1058384 avg_rijndael_cycles=162004 ratio=15.306732 avg_calls=27297
+  RYDE 5 arm_eor keygen : total=4909 rij=0 (0.000000%)
+  RYDE 5 arm_eor sign : total=1284106 rij=164663 (12.837485%)
+  RYDE 5 arm_eor verify : total=1058984 rij=161943 (15.282168%)
+-e 
+### Creating build folders
+
+mkdir -p bin/build
+-e 
+### Compiling rbc_67_elt.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_elt.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_elt.o
+-e 
+### Compiling rbc_67_vec.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_vec.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_vec.o
+-e 
+### Compiling rbc_67_vspace.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_vspace.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_vspace.o
+-e 
+### Compiling rbc_67_mat.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_mat.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_mat.o
+-e 
+### Compiling rbc_67_mat_fq.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rbc-67/rbc_67_mat_fq.c -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -o bin/build/rbc_67_mat_fq.o
+-e 
+### Compiling keypair.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/keypair.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/keypair.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling signature.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/signature.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/signature.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling verification.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/verification.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/verification.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling parsing.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/parsing.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/parsing.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling ggm_tree-folded.o (ARM folded)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -DUSE_ARM_FOLDED -c src/ggm_tree.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/ggm_tree-folded.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling sign.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/sign.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/sign.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling tcith-folded.o (ARM folded)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -DUSE_ARM_FOLDED -c src/tcith.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/tcith-folded.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling rijndael256_keyschedule.o (Rijndael-256 key schedule)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_keyschedule.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/rijndael256_keyschedule.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling rijndael256_folded_arm.o (Rijndael-256 folded encrypt)
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c src/rijndael256_folded_arm.c -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/rijndael256_folded_arm.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling SimpleFIPS202.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/XKCP/SimpleFIPS202.c -I lib/XKCP -Ilib/XKCP -Ilib/XKCP/opt64 -Llib/XKCP -lshake -o bin/build/SimpleFIPS202.o
+clang: warning: -lshake: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-Llib/XKCP' [-Wunused-command-line-argument]
+-e 
+### Compiling randombytes.o
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -c lib/randombytes/randombytes.c -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -o bin/build/randombytes.o
+clang: warning: -lcrypto: 'linker' input unused [-Wunused-command-line-argument]
+clang: warning: argument unused during compilation: '-L/opt/homebrew/opt/openssl@3/lib' [-Wunused-command-line-argument]
+-e 
+### Compiling XKCP
+
+make -C lib/XKCP
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHash.c -o KeccakHash.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSponge.c -o KeccakSponge.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakSpongetimes4.c -o KeccakSpongetimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 KeccakHashtimes4.c -o KeccakHashtimes4.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-opt64.c -o opt64/KeccakP-1600-opt64.o
+cc -c -O3 -march=native -Wall -Wextra -Wpedantic -Werror -Wno-unused-function -std=gnu99 -I. -I./opt64 opt64/KeccakP-1600-times4-on1.c -o opt64/KeccakP-1600-times4-on1.o
+ar rcs libshake.a KeccakHash.o KeccakSponge.o KeccakSpongetimes4.o KeccakHashtimes4.o opt64/KeccakP-1600-opt64.o opt64/KeccakP-1600-times4-on1.o
+-e 
+### Compiling RYDE-5F (benchmark) using folded ARM Rijndael
+
+cc -O3 -flto -Wall -Wextra -Wno-unused-function -DOPT_ARM -DUSE_ARM_FOLDED src/bench.c bin/build/rbc_67_elt.o bin/build/rbc_67_vec.o bin/build/rbc_67_vspace.o bin/build/rbc_67_mat.o bin/build/rbc_67_mat_fq.o bin/build/keypair.o bin/build/signature.o bin/build/verification.o bin/build/parsing.o bin/build/ggm_tree-folded.o bin/build/sign.o bin/build/tcith-folded.o bin/build/rijndael256_keyschedule.o bin/build/rijndael256_folded_arm.o bin/build/SimpleFIPS202.o bin/build/randombytes.o -I src -I src/rbc-67 -I src/wrapper -Ilib/XKCP -Ilib/XKCP/opt64 -I lib/randombytes -I/opt/homebrew/opt/openssl@3/include -L/opt/homebrew/opt/openssl@3/lib -lcrypto -Llib/XKCP -lshake -o bin/ryde5f-arm-folded-bench
+---- RYDE 5 arm_folded run 1 : ./bin/ryde5f-arm-folded-bench 300 ----
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=7712 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1322693 avg_rijndael_cycles=192735 ratio=14.571408 avg_calls=27683
+PROFILE verify avg_total_cycles=1097074 avg_rijndael_cycles=189404 ratio=17.264469 avg_calls=27297
+---- RYDE 5 arm_folded run 2 : ./bin/ryde5f-arm-folded-bench 300 ----
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=4965 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1315375 avg_rijndael_cycles=191719 ratio=14.575235 avg_calls=27683
+PROFILE verify avg_total_cycles=1095695 avg_rijndael_cycles=189344 ratio=17.280721 avg_calls=27297
+---- RYDE 5 arm_folded run 3 : ./bin/ryde5f-arm-folded-bench 300 ----
+SCHEME RYDE-5F
+PROFILE keygen avg_total_cycles=4976 avg_rijndael_cycles=0 ratio=0.000000 avg_calls=0
+PROFILE sign avg_total_cycles=1316929 avg_rijndael_cycles=192026 ratio=14.581348 avg_calls=27683
+PROFILE verify avg_total_cycles=1096617 avg_rijndael_cycles=189250 ratio=17.257620 avg_calls=27297
+  RYDE 5 arm_folded keygen : total=4976 rij=0 (0.000000%)
+  RYDE 5 arm_folded sign : total=1316929 rij=192026 (14.571408%)
+  RYDE 5 arm_folded verify : total=1096617 rij=189344 (17.264469%)
+>>> SDitH cat3
+-- The C compiler identification is AppleClang 17.0.0.17000603
+-- The CXX compiler identification is AppleClang 17.0.0.17000603
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The ASM compiler identification is AppleClang
+-- Found assembler: /usr/bin/cc
+-- BUILD_TESTING: ON
+-- BUILD_KATS: OFF
+-- USE_ARM_CRYPTO: ON
+-- USE_NEON: OFF
+-- USE_ARM_FOLDED: OFF
+-- Rijndael-256: ARM Crypto Extension acceleration enabled
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: <project-root>/2nd-additional_signature/SDitH/Reference_Implementation/sdith_cat3_fast/build_arm
+[  2%] Building C object lib/aes/CMakeFiles/aes.dir/aes_ansi_ref.c.o
+[  5%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHashtimes4.c.o
+[ 11%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_ref.c.o
+[ 11%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256.c.o
+[ 13%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSpongetimes4.c.o
+[ 16%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHash.c.o
+[ 19%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSponge.c.o
+[ 22%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_special_ref.c.o
+[ 25%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_ref.c.o
+[ 27%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_ref.c.o
+[ 30%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-opt64.c.o
+[ 33%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-times4-on1.c.o
+[ 36%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_opt_keyschedule.c.o
+[ 38%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_arm_wrapper.c.o
+[ 41%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_arm.c.o
+[ 44%] Building ASM object lib/aes/CMakeFiles/aes.dir/rijndael256_arm.S.o
+[ 47%] Linking C static library libaes.a
+[ 47%] Built target aes
+[ 50%] Linking C static library libsha3.a
+[ 50%] Built target sha3
+[ 52%] Building C object CMakeFiles/vole.dir/src/gf256.c.o
+[ 55%] Building C object CMakeFiles/vole.dir/src/matrix_vector_products_f2.c.o
+[ 58%] Building C object CMakeFiles/vole.dir/src/ggm.c.o
+[ 63%] Building C object CMakeFiles/vole.dir/src/commons.c.o
+[ 63%] Building C object CMakeFiles/vole.dir/src/sdith_prng.c.o
+[ 66%] Building C object CMakeFiles/vole.dir/src/vole_expansion.c.o
+[ 69%] Building C object CMakeFiles/vole.dir/src/matrix_transpose_f2.c.o
+[ 72%] Building C object CMakeFiles/vole.dir/src/gf192.c.o
+[ 75%] Building C object CMakeFiles/vole.dir/src/piop_circuit.c.o
+[ 77%] Building C object CMakeFiles/vole.dir/src/gf128.c.o
+[ 80%] Building C object CMakeFiles/vole.dir/src/rsd.c.o
+[ 83%] Building C object CMakeFiles/vole.dir/src/sdith_signature.c.o
+[ 86%] Building C object CMakeFiles/vole.dir/src/sdith_signature_parameters.c.o
+[ 88%] Building C object CMakeFiles/vole.dir/src/vole_to_piop.c.o
+[ 91%] Building CXX object CMakeFiles/vole.dir/src/vole_parameters.cpp.o
+[ 94%] Linking CXX static library libvole.a
+[ 94%] Built target vole
+[ 97%] Building C object CMakeFiles/bench_sdith.dir/test/bench_sdith.c.o
+[100%] Linking CXX executable bench_sdith
+[100%] Built target bench_sdith
+---- SDitH 3 arm_eor run 1 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=51746 avg_rijndael_cycles=40887 ratio=79.014803 avg_calls=17817
+PROFILE sign avg_total_cycles=4959124 avg_rijndael_cycles=72284 ratio=1.457596 avg_calls=30093
+PROFILE verify avg_total_cycles=4653788 avg_rijndael_cycles=71836 ratio=1.543603 avg_calls=30045
+---- SDitH 3 arm_eor run 2 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=38267 avg_rijndael_cycles=30201 ratio=78.921786 avg_calls=17817
+PROFILE sign avg_total_cycles=4962094 avg_rijndael_cycles=72162 ratio=1.454265 avg_calls=30093
+PROFILE verify avg_total_cycles=4654403 avg_rijndael_cycles=71818 ratio=1.543012 avg_calls=30045
+---- SDitH 3 arm_eor run 3 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=38159 avg_rijndael_cycles=30122 ratio=78.938127 avg_calls=17817
+PROFILE sign avg_total_cycles=4981261 avg_rijndael_cycles=72670 ratio=1.458868 avg_calls=30093
+PROFILE verify avg_total_cycles=4663797 avg_rijndael_cycles=71819 ratio=1.539926 avg_calls=30045
+  SDitH 3 arm_eor keygen : total=38267 rij=30201 (79.014803%)
+  SDitH 3 arm_eor sign : total=4962094 rij=72284 (1.457596%)
+  SDitH 3 arm_eor verify : total=4654403 rij=71819 (1.543603%)
+-- The C compiler identification is AppleClang 17.0.0.17000603
+-- The CXX compiler identification is AppleClang 17.0.0.17000603
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The ASM compiler identification is AppleClang
+-- Found assembler: /usr/bin/cc
+-- BUILD_TESTING: ON
+-- BUILD_KATS: OFF
+-- USE_ARM_CRYPTO: OFF
+-- USE_NEON: OFF
+-- USE_ARM_FOLDED: ON
+-- Rijndael-256: ARM Crypto + AddRoundKey-folded acceleration enabled
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: <project-root>/2nd-additional_signature/SDitH/Reference_Implementation/sdith_cat3_fast/build_arm_folded
+[  2%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHash.c.o
+[  8%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSponge.c.o
+[ 10%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256.c.o
+[ 10%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-opt64.c.o
+[ 13%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHashtimes4.c.o
+[ 16%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSpongetimes4.c.o
+[ 18%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-times4-on1.c.o
+[ 21%] Building C object lib/aes/CMakeFiles/aes.dir/aes_ansi_ref.c.o
+[ 24%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_special_ref.c.o
+[ 27%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_ref.c.o
+[ 29%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_ref.c.o
+[ 32%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_ref.c.o
+[ 35%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_opt_keyschedule.c.o
+[ 37%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_folded_arm.c.o
+[ 40%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_arm_wrapper.c.o
+[ 43%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_arm.c.o
+[ 45%] Building ASM object lib/aes/CMakeFiles/aes.dir/rijndael256_arm.S.o
+[ 48%] Linking C static library libaes.a
+[ 48%] Built target aes
+[ 51%] Linking C static library libsha3.a
+[ 51%] Built target sha3
+[ 56%] Building C object CMakeFiles/vole.dir/src/gf256.c.o
+[ 59%] Building C object CMakeFiles/vole.dir/src/gf192.c.o
+[ 59%] Building C object CMakeFiles/vole.dir/src/sdith_prng.c.o
+[ 62%] Building C object CMakeFiles/vole.dir/src/matrix_vector_products_f2.c.o
+[ 64%] Building C object CMakeFiles/vole.dir/src/commons.c.o
+[ 70%] Building C object CMakeFiles/vole.dir/src/matrix_transpose_f2.c.o
+[ 70%] Building C object CMakeFiles/vole.dir/src/ggm.c.o
+[ 72%] Building C object CMakeFiles/vole.dir/src/vole_expansion.c.o
+[ 75%] Building C object CMakeFiles/vole.dir/src/piop_circuit.c.o
+[ 78%] Building C object CMakeFiles/vole.dir/src/gf128.c.o
+[ 81%] Building C object CMakeFiles/vole.dir/src/rsd.c.o
+[ 83%] Building C object CMakeFiles/vole.dir/src/sdith_signature.c.o
+[ 86%] Building C object CMakeFiles/vole.dir/src/sdith_signature_parameters.c.o
+[ 89%] Building C object CMakeFiles/vole.dir/src/vole_to_piop.c.o
+[ 91%] Building CXX object CMakeFiles/vole.dir/src/vole_parameters.cpp.o
+[ 94%] Linking CXX static library libvole.a
+[ 94%] Built target vole
+[ 97%] Building C object CMakeFiles/bench_sdith.dir/test/bench_sdith.c.o
+[100%] Linking CXX executable bench_sdith
+[100%] Built target bench_sdith
+---- SDitH 3 arm_folded run 1 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=68715 avg_rijndael_cycles=59153 ratio=86.084552 avg_calls=17817
+PROFILE sign avg_total_cycles=5002252 avg_rijndael_cycles=93105 ratio=1.861262 avg_calls=30093
+PROFILE verify avg_total_cycles=4698137 avg_rijndael_cycles=92974 ratio=1.978955 avg_calls=30045
+---- SDitH 3 arm_folded run 2 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=58174 avg_rijndael_cycles=50015 ratio=85.974834 avg_calls=17817
+PROFILE sign avg_total_cycles=4988885 avg_rijndael_cycles=93011 ratio=1.864364 avg_calls=30093
+PROFILE verify avg_total_cycles=4696307 avg_rijndael_cycles=92853 ratio=1.977149 avg_calls=30045
+---- SDitH 3 arm_folded run 3 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=57628 avg_rijndael_cycles=49513 ratio=85.918304 avg_calls=17817
+PROFILE sign avg_total_cycles=4993776 avg_rijndael_cycles=93054 ratio=1.863400 avg_calls=30093
+PROFILE verify avg_total_cycles=4693127 avg_rijndael_cycles=92904 ratio=1.979576 avg_calls=30045
+  SDitH 3 arm_folded keygen : total=58174 rij=50015 (86.084552%)
+  SDitH 3 arm_folded sign : total=4993776 rij=93054 (1.861262%)
+  SDitH 3 arm_folded verify : total=4696307 rij=92904 (1.978955%)
+>>> SDitH cat5
+-- The C compiler identification is AppleClang 17.0.0.17000603
+-- The CXX compiler identification is AppleClang 17.0.0.17000603
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The ASM compiler identification is AppleClang
+-- Found assembler: /usr/bin/cc
+-- BUILD_TESTING: ON
+-- BUILD_KATS: OFF
+-- USE_ARM_CRYPTO: ON
+-- USE_NEON: OFF
+-- USE_ARM_FOLDED: OFF
+-- Rijndael-256: ARM Crypto Extension acceleration enabled
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: <project-root>/2nd-additional_signature/SDitH/Reference_Implementation/sdith_cat5_fast/build_arm
+[  2%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256.c.o
+[  5%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHashtimes4.c.o
+[  8%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-opt64.c.o
+[ 11%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-times4-on1.c.o
+[ 13%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSponge.c.o
+[ 16%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHash.c.o
+[ 19%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSpongetimes4.c.o
+[ 22%] Building C object lib/aes/CMakeFiles/aes.dir/aes_ansi_ref.c.o
+[ 27%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_ref.c.o
+[ 27%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_ref.c.o
+[ 33%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_ref.c.o
+[ 33%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_special_ref.c.o
+[ 36%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_opt_keyschedule.c.o
+[ 38%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_arm_wrapper.c.o
+[ 41%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_arm.c.o
+[ 44%] Building ASM object lib/aes/CMakeFiles/aes.dir/rijndael256_arm.S.o
+[ 47%] Linking C static library libaes.a
+[ 47%] Built target aes
+[ 50%] Linking C static library libsha3.a
+[ 50%] Built target sha3
+[ 55%] Building C object CMakeFiles/vole.dir/src/commons.c.o
+[ 55%] Building C object CMakeFiles/vole.dir/src/sdith_prng.c.o
+[ 58%] Building C object CMakeFiles/vole.dir/src/matrix_vector_products_f2.c.o
+[ 61%] Building C object CMakeFiles/vole.dir/src/ggm.c.o
+[ 63%] Building C object CMakeFiles/vole.dir/src/vole_expansion.c.o
+[ 66%] Building C object CMakeFiles/vole.dir/src/gf192.c.o
+[ 69%] Building C object CMakeFiles/vole.dir/src/matrix_transpose_f2.c.o
+[ 72%] Building C object CMakeFiles/vole.dir/src/gf256.c.o
+[ 75%] Building C object CMakeFiles/vole.dir/src/piop_circuit.c.o
+[ 77%] Building C object CMakeFiles/vole.dir/src/rsd.c.o
+[ 80%] Building C object CMakeFiles/vole.dir/src/gf128.c.o
+[ 83%] Building C object CMakeFiles/vole.dir/src/sdith_signature.c.o
+[ 86%] Building C object CMakeFiles/vole.dir/src/sdith_signature_parameters.c.o
+[ 88%] Building C object CMakeFiles/vole.dir/src/vole_to_piop.c.o
+[ 91%] Building CXX object CMakeFiles/vole.dir/src/vole_parameters.cpp.o
+[ 94%] Linking CXX static library libvole.a
+[ 94%] Built target vole
+[ 97%] Building C object CMakeFiles/bench_sdith.dir/test/bench_sdith.c.o
+[100%] Linking CXX executable bench_sdith
+[100%] Built target bench_sdith
+---- SDitH 5 arm_eor run 1 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=58625 avg_rijndael_cycles=47778 ratio=81.497655 avg_calls=19080
+PROFILE sign avg_total_cycles=7573501 avg_rijndael_cycles=90871 ratio=1.199855 avg_calls=35449
+PROFILE verify avg_total_cycles=6939714 avg_rijndael_cycles=90767 ratio=1.307936 avg_calls=35385
+---- SDitH 5 arm_eor run 2 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=46758 avg_rijndael_cycles=38119 ratio=81.524017 avg_calls=19080
+PROFILE sign avg_total_cycles=7580677 avg_rijndael_cycles=90858 ratio=1.198547 avg_calls=35449
+PROFILE verify avg_total_cycles=6940190 avg_rijndael_cycles=90866 ratio=1.309273 avg_calls=35385
+---- SDitH 5 arm_eor run 3 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=46748 avg_rijndael_cycles=38120 ratio=81.543595 avg_calls=19080
+PROFILE sign avg_total_cycles=7593433 avg_rijndael_cycles=90905 ratio=1.197153 avg_calls=35449
+PROFILE verify avg_total_cycles=6962795 avg_rijndael_cycles=91224 ratio=1.310164 avg_calls=35385
+  SDitH 5 arm_eor keygen : total=46758 rij=38120 (81.497655%)
+  SDitH 5 arm_eor sign : total=7580677 rij=90871 (1.199855%)
+  SDitH 5 arm_eor verify : total=6940190 rij=90866 (1.307936%)
+-- The C compiler identification is AppleClang 17.0.0.17000603
+-- The CXX compiler identification is AppleClang 17.0.0.17000603
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /usr/bin/cc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- The ASM compiler identification is AppleClang
+-- Found assembler: /usr/bin/cc
+-- BUILD_TESTING: ON
+-- BUILD_KATS: OFF
+-- USE_ARM_CRYPTO: OFF
+-- USE_NEON: OFF
+-- USE_ARM_FOLDED: ON
+-- Rijndael-256: ARM Crypto + AddRoundKey-folded acceleration enabled
+-- Configuring done (0.5s)
+-- Generating done (0.0s)
+-- Build files have been written to: <project-root>/2nd-additional_signature/SDitH/Reference_Implementation/sdith_cat5_fast/build_arm_folded
+[  2%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSponge.c.o
+[  8%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakSpongetimes4.c.o
+[  8%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHash.c.o
+[ 13%] Building C object lib/sha3/CMakeFiles/sha3.dir/KeccakHashtimes4.c.o
+[ 13%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256.c.o
+[ 16%] Building C object lib/aes/CMakeFiles/aes.dir/aes_ansi_ref.c.o
+[ 18%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-opt64.c.o
+[ 21%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_ref.c.o
+[ 24%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_ref.c.o
+[ 27%] Building C object lib/sha3/CMakeFiles/sha3.dir/opt64/KeccakP-1600-times4-on1.c.o
+[ 29%] Building C object lib/aes/CMakeFiles/aes.dir/aes128_ctrle_special_ref.c.o
+[ 32%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_opt_keyschedule.c.o
+[ 35%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_ref.c.o
+[ 37%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_folded_arm.c.o
+[ 43%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_ctrle_special_arm.c.o
+[ 43%] Building C object lib/aes/CMakeFiles/aes.dir/rijndael256_arm_wrapper.c.o
+[ 45%] Building ASM object lib/aes/CMakeFiles/aes.dir/rijndael256_arm.S.o
+[ 48%] Linking C static library libaes.a
+[ 48%] Built target aes
+[ 51%] Linking C static library libsha3.a
+[ 51%] Built target sha3
+[ 54%] Building C object CMakeFiles/vole.dir/src/commons.c.o
+[ 56%] Building C object CMakeFiles/vole.dir/src/sdith_prng.c.o
+[ 59%] Building C object CMakeFiles/vole.dir/src/matrix_transpose_f2.c.o
+[ 62%] Building C object CMakeFiles/vole.dir/src/gf256.c.o
+[ 64%] Building C object CMakeFiles/vole.dir/src/ggm.c.o
+[ 70%] Building C object CMakeFiles/vole.dir/src/matrix_vector_products_f2.c.o
+[ 70%] Building C object CMakeFiles/vole.dir/src/gf192.c.o
+[ 72%] Building C object CMakeFiles/vole.dir/src/vole_expansion.c.o
+[ 75%] Building C object CMakeFiles/vole.dir/src/piop_circuit.c.o
+[ 78%] Building C object CMakeFiles/vole.dir/src/gf128.c.o
+[ 81%] Building C object CMakeFiles/vole.dir/src/rsd.c.o
+[ 83%] Building C object CMakeFiles/vole.dir/src/sdith_signature.c.o
+[ 86%] Building C object CMakeFiles/vole.dir/src/sdith_signature_parameters.c.o
+[ 89%] Building C object CMakeFiles/vole.dir/src/vole_to_piop.c.o
+[ 91%] Building CXX object CMakeFiles/vole.dir/src/vole_parameters.cpp.o
+[ 94%] Linking CXX static library libvole.a
+[ 94%] Built target vole
+[ 97%] Building C object CMakeFiles/bench_sdith.dir/test/bench_sdith.c.o
+[100%] Linking CXX executable bench_sdith
+[100%] Built target bench_sdith
+---- SDitH 5 arm_folded run 1 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=75647 avg_rijndael_cycles=65486 ratio=86.567874 avg_calls=19080
+PROFILE sign avg_total_cycles=7639805 avg_rijndael_cycles=108981 ratio=1.426489 avg_calls=35449
+PROFILE verify avg_total_cycles=6976670 avg_rijndael_cycles=107046 ratio=1.534342 avg_calls=35385
+---- SDitH 5 arm_folded run 2 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=65099 avg_rijndael_cycles=56415 ratio=86.660317 avg_calls=19080
+PROFILE sign avg_total_cycles=7610813 avg_rijndael_cycles=108769 ratio=1.429138 avg_calls=35449
+PROFILE verify avg_total_cycles=6976141 avg_rijndael_cycles=107068 ratio=1.534774 avg_calls=35385
+---- SDitH 5 arm_folded run 3 : ./bench_sdith 60 ----
+PROFILE keygen avg_total_cycles=64654 avg_rijndael_cycles=56015 ratio=86.638104 avg_calls=19080
+PROFILE sign avg_total_cycles=7614262 avg_rijndael_cycles=109172 ratio=1.433783 avg_calls=35449
+PROFILE verify avg_total_cycles=6975028 avg_rijndael_cycles=106609 ratio=1.528438 avg_calls=35385
+  SDitH 5 arm_folded keygen : total=65099 rij=56415 (86.567874%)
+  SDitH 5 arm_folded sign : total=7614262 rij=108981 (1.426489%)
+  SDitH 5 arm_folded verify : total=6976141 rij=107046 (1.534342%)
+
+CSV : <project-root>/rijndael-256/benchmark_pqc/results/benchmark_20260624_141142.csv
+RAW : <project-root>/rijndael-256/benchmark_pqc/results/folded_vs_eor_raw_20260624_141142.log
+done.

@@ -1,0 +1,5 @@
+regime,dit,throughput_mbps,time_ms
+single,off,4178.64,7.658
+single,on,4180.27,7.655
+x4,off,6531.95,4.899
+x4,on,6535.95,4.896

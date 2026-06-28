@@ -1,0 +1,72 @@
+=== Rijndael-256 CTR Benchmark ===
+
+Run metadata:
+  UTC timestamp: 2026-04-09T07:36:11Z
+  Validation: enabled
+  CSV output: benchmark-results/20260409T073608Z/ctr.csv
+  Command: build/benchmark_ctr --csv benchmark-results/20260409T073608Z/ctr.csv
+  Device 0: NVIDIA GeForce RTX 4080
+  Compute capability: 8.9
+  Global memory: 15.69 GiB
+  Multiprocessors: 76
+  Warp size: 32
+  Max threads/block: 1024
+  Shared memory/block: 49152 bytes
+  Shared memory/SM: 102400 bytes
+  CUDA runtime version: 12000
+  CUDA driver version: 12020
+
+Validation: passed for CTR host and kernel-only APIs
+
+Data size: 1.0 MiB (32768 blocks)
+  E2E (malloc + copies + kernel + copies + free)
+  warmup=2 iterations=5
+  Threads   V2 (ms)      V3 (ms)     
+  -------------------------------------------
+  128       0.291        0.280       
+  256       0.290        0.283       
+  512       0.290        0.295       
+  1024      0.301        0.293       
+  Best E2E throughput: V2 3.37 GiB/s @ 512 threads, V3 3.49 GiB/s @ 128 threads
+
+  Kernel-only (pre-allocated buffers)
+  warmup=3 iterations=10
+  Threads   V2 (ms)      V3 (ms)     
+  -------------------------------------------
+  128       0.015        0.015       
+  256       0.023        0.021       
+  512       0.028        0.026       
+  1024      0.034        0.030       
+  Best kernel-only throughput: V2 63.16 GiB/s @ 128 threads, V3 65.70 GiB/s @ 128 threads
+
+Data size: 100.0 MiB (3276800 blocks)
+  E2E (malloc + copies + kernel + copies + free)
+  warmup=2 iterations=5
+  Threads   V2 (ms)      V3 (ms)     
+  -------------------------------------------
+  128       17.613       17.668      
+  256       17.812       17.955      
+  512       18.240       18.400      
+  1024      18.447       18.454      
+  Best E2E throughput: V2 5.54 GiB/s @ 128 threads, V3 5.53 GiB/s @ 128 threads
+
+  Kernel-only (pre-allocated buffers)
+  warmup=3 iterations=10
+  Threads   V2 (ms)      V3 (ms)     
+  -------------------------------------------
+  128       0.971        0.941       
+  256       1.292        1.234       
+  512       1.714        1.725       
+  1024      2.007        1.878       
+  Best kernel-only throughput: V2 100.57 GiB/s @ 128 threads, V3 103.74 GiB/s @ 128 threads
+
+Occupancy summary:
+  CTR V2 @ 128 threads: 11 blocks/SM, 91.7% occupancy
+  CTR V3 @ 128 threads: 2 blocks/SM, 16.7% occupancy
+  CTR V2 @ 256 threads: 6 blocks/SM, 100.0% occupancy
+  CTR V3 @ 256 threads: 2 blocks/SM, 33.3% occupancy
+  CTR V2 @ 512 threads: 3 blocks/SM, 100.0% occupancy
+  CTR V3 @ 512 threads: 2 blocks/SM, 66.7% occupancy
+  CTR V2 @ 1024 threads: 1 blocks/SM, 66.7% occupancy
+  CTR V3 @ 1024 threads: 1 blocks/SM, 66.7% occupancy
+

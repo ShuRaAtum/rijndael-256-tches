@@ -1,0 +1,79 @@
+Rijndael-256 AArch64 Benchmark — Raspberry Pi 5 / Cortex-A76 (folded + ARM AES-128/256 baselines + EOR)
+======================================================================================================
+
+Date:       2026-06-19
+Device:     Raspberry Pi 5 Model B Rev 1.0 — Cortex-A76 (CPU part 0xd0b), ARMv8.2-A, 4 cores, max 2.40 GHz
+Cooling:    ACTIVE FAN (forced air). NOTE: an earlier FANLESS attempt heat-soaked to 87.5 C and was
+            DISCARDED (firmware throttled the silicon clock above 85 C without updating Linux
+            scaling_cur_freq, which inverted AES-256/AES-128 and gave ~45% inter-run variance — not
+            committed). This run is the fan-cooled, validated re-measurement.
+OS:         Ubuntu 24.04 (Linux 6.8.0-1053-raspi, aarch64)
+Toolchain:  gcc 13.3.0 (Ubuntu 13.3.0-6ubuntu2~24.04.1); GNU Make 4.3
+Flags:      C   : -O3 -Wall -Wextra -march=armv8.2-a+crypto -I../common -I.
+            asm : -march=armv8.2-a+crypto
+ISA:        ARMv8.2-A + Crypto Extension (AESE/AESD/AESMC/AESIMC, PMULL, SHA1/2).
+            HWCAP: fp asimd aes pmull sha1 sha2 crc32 atomics fphp asimdhp lrcpc dcpop asimddp.
+            FEAT_DIT ABSENT (no `dit` HWCAP) — Cortex-A76 is ARMv8.2-A and predates ARMv8.4, so the
+            DIT (Data-Independent Timing) overhead is N/A on this core; the M2 FEAT_DIT=1 ~0% result
+            stands as the measured FEAT_DIT datapoint.
+Clocks:     governor=ondemand; under sustained load scaling_cur_freq held 2,400,000 kHz for ALL 229
+            thermal samples (0 below 2.4 GHz). Fan kept temperature low, so no firmware throttle:
+              idle (fan on) 37.5 C ; run: before 40.3 C, MAX 56.2 C, after 55.1 C  (<< 80 C).
+
+Benchmark config (aarch64/benchmark/benchmark.c — identical binary/config to the M2 run):
+  Block size:   R256 = 32 bytes (256-bit); AES = 16 bytes
+  Data size:    1,048,576 blocks/run (R256 = 32 MB; AES = 16 MB)
+  Iterations:   10
+  Timer:        clock_gettime CLOCK_MONOTONIC (wall-clock)
+  Statistic:    throughput table = mean-of-10; AES->R256 table = best-of-10 (min time)
+  Warmup:       10,000 iters per implementation before timing
+  Build/run:    make -f aarch64/Makefile.rpi5 test ; make -f aarch64/Makefile.rpi5 rijndael256_benchmark
+
+Implementations measured:
+  throughput table : Reference / T-table / NEON Single / NEON 4PT / NEON IL 4PT / ARM Crypto (EOR path)
+  AES->R256 table  : AES-128 (10R) / AES-256 (14R, round-matched) / R256 folded / R256 EOR
+  R256 folded = AddRoundKey folded into AESE via pre-shuffled round keys
+                (aarch64/rijndael256_folded_arm.c); measured single + interleaved x2/x4/x8.
+
+Correctness — KAT PASS (all bit-identical to the portable reference):
+  - NIST Rijndael-256 KAT (make -f Makefile.rpi5 test): Reference, T-table, ARM Crypto, NEON
+    {Single,4PT,IL 4PT} PASS for key 128/192/256 + cross-implementation consistency.
+  - AES FIPS-197 self-test: PASS  (hard gate in the benchmark binary).
+  - R256 folded KAT: PASS — single-block, 1000-block sweep, and x2/x4/x8 interleaved
+    (hard gate in the benchmark binary; the run aborts otherwise).
+
+Headline results (best-of-10, MB/s; from the run.txt human invocation):
+  Path            single        x2        x4        x8
+  AES-128 (10R)   2591.1    3441.0    2537.1    2714.3
+  AES-256 (14R)   1937.3    2435.6    1932.2    2097.1
+  R256 folded      608.3    1014.1     988.5     989.7   <- best N=2 (A76-optimal; matches the board note)
+  R256 EOR         509.1   (single; folded is the promoted path — folded x2 ~1.99x the EOR single)
+
+  AES -> R256 per-byte slowdown (folded) — the within-platform cross-ISA comparison metric:
+    single-block     : 3.18x vs AES-256 | 4.26x vs AES-128
+    interleaved N=2  : 2.40x vs AES-256 | 3.39x vs AES-128   <- regime-matched to x86 VAES-512 (16-block)
+
+Cross-platform story (regime-matched folded vs round-matched AES-256), now complete:
+  x86 1.09x  <  M2 1.80x  <  A76 2.40x   (monotone in NEON width; A76 = 2 TBL on shared NEON pipes
+  vs x86 = 1 VPERMB on a separate port overlapping AES). A76 confirms the AArch64 finding generalises
+  to a non-Apple Crypto-Extension core.
+
+Notes / caveats:
+  - MB/s is wall-clock; the AES->R256 ratio is frequency-independent (same binary, same method, same
+    silicon). cyc/byte not reported (no fixed-rate counter used on this run).
+  - A76 optimum is N=2 (x4/x8 do not improve over x2: ~989 vs 1014 MB/s) — a shallower interleave
+    sweet-spot than M2's N=4, consistent with the narrower A76 NEON issue width.
+  - Data validated against the discarded fanless run by 5 gates: max temp <80 C; AES-256 < AES-128
+    (single); x2 >= single; <0.2% variance between the run.txt and committed --csv invocations;
+    folded-vs-AES-256 at best-N ~2.4x.
+
+Raw data files (this run):
+  rpi5_a76_2026-06-19.csv             AES->R256 baseline + folded + interleave (best-of-10; --csv invocation)
+  rpi5_a76_throughput_2026-06-19.csv  per-impl throughput (mean-of-10; same schema as apple_m2_throughput)
+  rpi5_a76_2026-06-19_run.txt         verbatim full human-readable run (EOR row, ratios, best-N, PASS lines)
+
+Reproduce:
+  cd aarch64 && make -f Makefile.rpi5 test && make -f Makefile.rpi5 rijndael256_benchmark
+  ./rijndael256_benchmark --csv     # machine-readable (throughput + AES->R256 sections)
+  ./rijndael256_benchmark           # human-readable (adds EOR row + slowdown ratios + best-N)
+  # Use active cooling: fanless A76 throttles above 85 C and corrupts the AES->R256 comparison.

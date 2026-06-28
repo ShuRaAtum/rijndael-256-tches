@@ -1,0 +1,62 @@
+Rijndael-256 AArch64 Benchmark — Apple M2 (folded + ARM AES-128/256 baselines + EOR)
+====================================================================================
+
+Date:       2026-06-18
+Device:     Apple M2 (P-core, up to 3.49 GHz; 4P + 4E)
+OS:         macOS 26.2 (Darwin kernel 25.2.0, build 25C56)
+Memory:     8 GB unified LPDDR5
+Toolchain:  Apple clang 17.0.0 (clang-1700.6.3.2)
+Flags:      C   : -O3 -Wall -Wextra -arch arm64 -I../common -I.
+            asm : -arch arm64 -march=armv8-a+crypto
+ISA:        ARMv8-A + Crypto Extension (AESE/AESD/AESMC/AESIMC, PMULL); FEAT_DIT=1 (not used here)
+
+Benchmark config (aarch64/benchmark/benchmark.c):
+  Block size:   R256 = 32 bytes (256-bit); AES = 16 bytes
+  Data size:    1,048,576 blocks/run (R256 = 32 MB; AES = 16 MB)
+  Iterations:   10
+  Timer:        clock_gettime CLOCK_MONOTONIC (wall-clock)
+  Statistic:    throughput table = mean-of-10; AES->R256 table = best-of-10 (min time)
+  Warmup:       10,000 iters per implementation before timing
+
+Implementations measured:
+  throughput table : Reference / T-table / NEON Single / NEON 4PT / NEON IL 4PT / ARM Crypto (EOR path)
+  AES->R256 table  : AES-128 (10R) / AES-256 (14R, round-matched) / R256 folded / R256 EOR
+  R256 folded = AddRoundKey folded into AESE via pre-shuffled round keys
+                (aarch64/rijndael256_folded_arm.c); measured single + interleaved x2/x4/x8.
+
+Correctness — KAT PASS (all bit-identical to the portable reference):
+  - NIST Rijndael-256 KAT (make test): Reference, T-table, ARM Crypto, NEON {Single,4PT,IL 4PT}
+    PASS for key 128/192/256 + cross-implementation consistency.
+  - AES FIPS-197 self-test: PASS  (hard gate in the benchmark binary).
+  - R256 folded KAT: PASS — single-block, 1000-block sweep, and x2/x4/x8 interleaved
+    (hard gate in the benchmark binary; the run aborts otherwise).
+
+Headline results (best-of-10, MB/s):
+  Path            single        x2        x4        x8
+  AES-128 (10R)   10356.0   12987.0   15223.6   17075.8
+  AES-256 (14R)    7920.8    9691.1   11713.0   12841.1
+  R256 folded      4180.3    5709.2    6510.7    2523.5   <- best N=4 (x8 collapses: NEON register spill)
+  R256 EOR         2193.9   (single; folded is ~1.9x faster -> folded is the promoted path)
+
+  AES -> R256 per-byte slowdown (folded) — the within-platform cross-ISA comparison metric:
+    single-block     : 1.90x vs AES-256 | 2.48x vs AES-128   (run.txt invocation printed 1.84x/2.46x — best-of-10 jitter)
+    interleaved N=4  : 1.80x vs AES-256 | 2.34x vs AES-128   <- regime-matched to x86 VAES-512 (16-block)
+
+Notes / caveats:
+  - MB/s is wall-clock; the AES->R256 ratio is frequency-independent (same binary, same method,
+    same silicon). cyc/byte not reported (no fixed-rate counter used on this run).
+  - x8 folded collapses (2523 MB/s < single) because 8x2 = 16 live NEON state regs + the round
+    keys spill; N=4 is optimal on M2 (matches the x8-spill note in the interleaved commit).
+  - The committed CSV (apple_m2_2026-06-18.csv, best-of-10) and the run log
+    (apple_m2_2026-06-18_run.txt) are independent invocations of the same binary; best-of-10
+    jitter is <~1%. The regime-matched N=4 ratio (1.80x/2.34x) is invariant across both.
+
+Raw data files (this run):
+  apple_m2_2026-06-18.csv             AES->R256 baseline + folded + interleave (best-of-10)
+  apple_m2_throughput_2026-06-18.csv  per-impl throughput refresh (mean-of-10; same schema as 2026-03-18)
+  apple_m2_2026-06-18_run.txt         verbatim full human-readable run (EOR row, ratios, best-N, PASS lines)
+
+Reproduce:
+  cd aarch64 && make test && make rijndael256_benchmark
+  ./rijndael256_benchmark --csv     # machine-readable (throughput + AES->R256 sections)
+  ./rijndael256_benchmark           # human-readable (adds EOR row + slowdown ratios + best-N)

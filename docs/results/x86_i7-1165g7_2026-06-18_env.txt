@@ -1,0 +1,56 @@
+Rijndael-256 x86-64 VAES-512 Benchmark — Intel Core i7-1165G7
+=============================================================
+
+Date:       2026-06-18
+Device:     11th Gen Intel(R) Core(TM) i7-1165G7 @ 2.80 GHz (Tiger Lake)
+            4 cores / 8 threads, base 2.80 GHz, max turbo 4.70 GHz
+OS:         Ubuntu 24.04.4 LTS (Linux 6.17.0-23-generic)
+Memory:     32 GB
+Toolchain:  gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+Flags:      -O3 -march=native -mavx512f -mavx512bw -mavx512vbmi -mvaes -mvpclmulqdq
+ISA:        avx512f avx512bw avx512vbmi avx512vl avx512dq vaes vpclmulqdq aes
+
+Benchmark config (x86/benchmark/benchmark_vaes.c):
+  Block size:   32 bytes (256 bits)
+  Working set:  32 KiB per path (L1-resident; reused REPEAT=8000x for compute peak)
+  Tile:         512 bytes/call, 8 ZMM => 8 independent dependency chains
+  Iterations:   best-of-30, reported over 3 trials
+  Timers:       wall-clock (clock_gettime CLOCK_MONOTONIC) for GB/s;
+                RDTSC for cyc/byte
+
+Implementations measured:
+  AES-128 VAES512        vector AES-NI baseline, 10 rounds (_mm512_aesenc_epi128)
+  AES-256 VAES512        vector AES-NI baseline, 14 rounds (round-matched to R256)
+  R256 VAES512           this work: 512-bit VAES Rijndael-256, 14 rounds
+                         (one ZMM = 2 blocks {L0,R0,L1,R1};
+                          round = VPERMB pre-shuffle + VAESENC; 16-block interleave)
+  R256 AES-NI scalar x4  prior scalar 128-bit AES-NI path (4-block interleaved),
+                         same silicon, for the scalar->vector speedup
+
+Correctness:
+  KAT (x86/test/test_kat_vaes.c) PASS for key 128/192/256, a 1000-block sweep,
+  and the 16-way interleaved path — all bit-identical to the portable reference.
+
+Headline results (best of 3 trials):
+  R256 VAES512        : 10.98 GB/s, 0.255 cyc/byte (14 rounds)
+  AES-256 VAES512     : 11.98 GB/s, 0.234 cyc/byte (14 rounds, round-matched)
+  R256 vs AES-256     : 1.09x slowdown/byte (round-matched)
+  R256 vs scalar x4   : ~3.0x faster (0.255 vs 0.777 cyc/byte, same CPU)
+
+Notes / caveats:
+  - cyc/byte is computed from RDTSC, which counts at the constant/nominal TSC
+    rate (~2.80 GHz), not the instantaneous core clock. GB/s (wall-clock) and the
+    ratios (1.09x, ~3.0x) are frequency-independent; the absolute cyc/byte is on
+    the same nominal-TSC basis as the repo's existing x86 figures.
+  - The R256 VAESENC count per byte is identical to round-matched AES-256; the
+    only extra work is one port-5 VPERMB per round, which overlaps the port-0
+    VAESENC, so the ~9% gap is essentially the hardware ceiling of this chip.
+  - This is a mobile (15-28 W) Tiger Lake part; AVX-512 license downclock and
+    thermal limits apply. The R256 ~0.26 cyc/byte is at the paper-level (~0.27)
+    target; a server part with higher sustained AVX-512 clock / dual VAES units
+    would lower the absolute number further.
+  - perf hardware counters were unavailable (perf_event_paranoid=4), so true
+    core-clock cyc/byte was not separately measured.
+
+Reproduce:
+  cd x86 && make vaes_test && make vaes_benchmark

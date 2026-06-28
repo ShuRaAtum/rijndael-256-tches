@@ -1,0 +1,72 @@
+=== Rijndael-256 ECB Benchmark ===
+
+Run metadata:
+  UTC timestamp: 2026-04-09T07:36:08Z
+  Validation: enabled
+  CSV output: benchmark-results/20260409T073608Z/ecb.csv
+  Command: build/benchmark_ecb --csv benchmark-results/20260409T073608Z/ecb.csv
+  Device 0: NVIDIA GeForce RTX 4080
+  Compute capability: 8.9
+  Global memory: 15.69 GiB
+  Multiprocessors: 76
+  Warp size: 32
+  Max threads/block: 1024
+  Shared memory/block: 49152 bytes
+  Shared memory/SM: 102400 bytes
+  CUDA runtime version: 12000
+  CUDA driver version: 12020
+
+Validation: passed for ECB host and kernel-only APIs
+
+Data size: 1.0 MiB (32768 blocks)
+  E2E (malloc + copies + kernel + copies + free)
+  warmup=2 iterations=5
+  Threads   V2 Enc(ms)   V2 Dec(ms)   V3 Enc(ms)   V3 Dec(ms)  
+  --------------------------------------------------------------
+  128       0.298        0.295        0.295        0.297       
+  256       0.301        0.301        0.300        0.299       
+  512       0.314        0.304        0.302        0.317       
+  1024      0.310        0.328        0.323        0.317       
+  Best E2E encrypt throughput: V2 3.28 GiB/s @ 128 threads, V3 3.31 GiB/s @ 128 threads
+
+  Kernel-only (pre-allocated buffers)
+  warmup=3 iterations=10
+  Threads   V2 Enc(ms)   V2 Dec(ms)   V3 Enc(ms)   V3 Dec(ms)  
+  --------------------------------------------------------------
+  128       0.024        0.023        0.023        0.023       
+  256       0.029        0.028        0.027        0.028       
+  512       0.033        0.032        0.031        0.031       
+  1024      0.040        0.039        0.036        0.036       
+  Best kernel-only encrypt throughput: V2 41.12 GiB/s @ 128 threads, V3 43.15 GiB/s @ 128 threads
+
+Data size: 100.0 MiB (3276800 blocks)
+  E2E (malloc + copies + kernel + copies + free)
+  warmup=2 iterations=5
+  Threads   V2 Enc(ms)   V2 Dec(ms)   V3 Enc(ms)   V3 Dec(ms)  
+  --------------------------------------------------------------
+  128       18.721       18.176       18.038       18.010      
+  256       18.461       18.215       18.321       18.400      
+  512       18.650       18.604       18.733       18.589      
+  1024      18.772       18.789       18.768       18.697      
+  Best E2E encrypt throughput: V2 5.29 GiB/s @ 256 threads, V3 5.41 GiB/s @ 128 threads
+
+  Kernel-only (pre-allocated buffers)
+  warmup=3 iterations=10
+  Threads   V2 Enc(ms)   V2 Dec(ms)   V3 Enc(ms)   V3 Dec(ms)  
+  --------------------------------------------------------------
+  128       1.222        1.135        1.203        1.247       
+  256       1.562        1.379        1.512        1.576       
+  512       1.806        1.777        1.767        1.762       
+  1024      1.975        1.947        1.912        1.913       
+  Best kernel-only encrypt throughput: V2 79.93 GiB/s @ 128 threads, V3 81.16 GiB/s @ 128 threads
+
+Occupancy summary:
+  ECB V2 encrypt @ 128 threads: 11 blocks/SM, 91.7% occupancy
+  ECB V3 encrypt @ 128 threads: 2 blocks/SM, 16.7% occupancy
+  ECB V2 encrypt @ 256 threads: 6 blocks/SM, 100.0% occupancy
+  ECB V3 encrypt @ 256 threads: 2 blocks/SM, 33.3% occupancy
+  ECB V2 encrypt @ 512 threads: 3 blocks/SM, 100.0% occupancy
+  ECB V3 encrypt @ 512 threads: 2 blocks/SM, 66.7% occupancy
+  ECB V2 encrypt @ 1024 threads: 1 blocks/SM, 66.7% occupancy
+  ECB V3 encrypt @ 1024 threads: 1 blocks/SM, 66.7% occupancy
+
